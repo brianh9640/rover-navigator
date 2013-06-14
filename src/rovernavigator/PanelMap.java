@@ -1,6 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:     Rover-Navigator
+ * Description: Science Olympiad Rover Navigator Scoring Program
+ * 
+ * File:        PanelMap.java
+ * 
+ * Created:     June 2013
+ * 
+ * Repository:  https://github.com/brianh9640/rover-navigator
+ * 
  */
 package rovernavigator;
 
@@ -13,7 +20,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.geom.Point2D;
+import java.text.DecimalFormat;
 import javax.swing.JPanel;
+import rovernavigator.map.MapExperiment;
+import rovernavigator.motion.TestResult;
 
 /**
  *
@@ -105,11 +116,58 @@ public class PanelMap extends JPanel implements MouseWheelListener,MouseMotionLi
         
         pointMouseLast.x = e.getX();
         pointMouseLast.y = e.getY();
+        
+        clearToolTip();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         pointMouseLast = null;
-    }
+        DecimalFormat formatDistance = new DecimalFormat("#.0");
+        DecimalFormat formatError = new DecimalFormat("0.000");
 
+        if (main == null) return;
+        if (main.map == null) return;
+                
+        Point2D.Double pointCursor = new Point2D.Double();
+        
+        pointCursor.x = mapDraw.getRealX(e.getX());
+        pointCursor.y = mapDraw.getRealY(e.getY());
+        
+        int ex = 0;
+        while (ex < main.map.experiments) {
+            ex++;
+        
+            MapExperiment test = main.map.experiment[ex];
+            if (test.point.distance(pointCursor) < 2.0) {
+                String msg;
+                msg = "Test " + test.id + "\nExper X:" + formatError.format(test.point.x) + " Y:" + formatError.format(test.point.y);
+                TestResult result = main.motionPath.getTestResult(test.id);
+                if (result != null) {
+                    if (result.completed) {
+                        msg += "\nRover X:" + formatError.format(result.point.x) + " Y:" + formatError.format(result.point.y);
+                        msg += "\nError = " + formatError.format(result.distError);
+                    }
+                }
+                System.out.println(msg);
+                mapDraw.defineToolTip(e.getX(),e.getY(),msg);
+                repaint();
+                return;
+            }
+            
+        }
+        clearToolTip();
+    }
+    
+    public void defineToolTip(int x, int y, String msg) {
+        mapDraw.defineToolTip(x,y,msg);
+        repaint();
+    }
+    public void clearToolTip() {
+        if (mapDraw.toolShow) {
+            mapDraw.clearToolTip();
+            repaint();
+        }
+    }
+    
 }

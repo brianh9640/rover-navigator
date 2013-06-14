@@ -1,6 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:     Rover-Navigator
+ * Description: Science Olympiad Rover Navigator Scoring Program
+ * 
+ * File:        MapDraw.java
+ * 
+ * Created:     June 2013
+ * 
+ * Repository:  https://github.com/brianh9640/rover-navigator
+ * 
  */
 package rovernavigator;
 
@@ -47,20 +54,23 @@ public class MapDraw {
     protected double zoomScale;
     
     protected Font fontGrid;
+    protected Font fontTool;
     
     protected int areaWidth = 10;
     protected int areaHeight = 10;
     
+    protected boolean   toolShow;
+    protected int       toolX;
+    protected int       toolY;
+    protected String    toolMsg;
+    
     RoverNavigator main;
     
-    //MapDef map;
-    //CommandList commands;
-    //MotionPath motionPath;
-
     public MapDraw() {
         main = null;
         
         fontGrid = new Font("Arial",Font.PLAIN, 12);
+        fontTool = new Font("Arial",Font.PLAIN, 14);
 
         mapX = 0;
         mapY = 0;
@@ -74,6 +84,8 @@ public class MapDraw {
         mapOffsetY = 0.0;
         
         zoomScale = 1.0;
+        
+        toolShow = false;
         
     }
     
@@ -107,6 +119,8 @@ public class MapDraw {
         drawExperiments(g);
         
         drawMotionPath(g);
+        
+        if (toolShow) drawToolTip(g);
     }    
     
     private void calcMapScale(Graphics g) {
@@ -459,7 +473,7 @@ public class MapDraw {
         int sw = scaleMapX(width);
         int sh = scaleMapY(height);
 
-        g.fillOval(sx1, sy1, sw, sh);
+        g.fillOval(sx1-sw/2, sy1-sh/2, sw, sh);
     }
     
     public void mapCircle(Graphics g,double x1,double y1,double radius) {        
@@ -471,7 +485,7 @@ public class MapDraw {
         int sw = scaleMapX(width);
         int sh = scaleMapY(height);
 
-        g.drawOval(sx1, sy1, sw, sh);
+        g.drawOval(sx1-sw/2, sy1-sh/2, sw, sh);
     }
     
     public int scaleMapX(double x) {
@@ -494,4 +508,64 @@ public class MapDraw {
         return sy;
     }
     
+    public double getRealX(int x) {
+        x -= mapX;
+        double mx = (double) x / (mapScaleX * zoomScale);
+        mx += mapOffsetX;
+        return mx;
+    }
+    
+    public double getRealY(int y) {
+        y = areaHeight - mapY - y;
+        double my = (double) y / (mapScaleY * zoomScale);
+        my += mapOffsetY;
+        return my;
+    }
+    
+    public void defineToolTip(int x, int y, String msg) {
+        toolShow = true;
+        toolX = x;
+        toolY = y;
+        toolMsg = msg;
+        
+    }
+    
+    public void clearToolTip() {
+        toolShow = false;
+    }
+    
+    public void drawToolTip(Graphics g) {
+        String line[] = toolMsg.split("\n");
+        int width = 0;
+        int height = 0;
+        
+        AffineTransform affineTransform = new AffineTransform();     
+        FontRenderContext frc = new FontRenderContext(affineTransform,true,true);
+        int textHeight = (int)(fontTool.getStringBounds(line[0], frc).getHeight());        
+        
+        g.setFont(fontTool);
+
+        int n = 0;
+        while (n < line.length) {
+            int textWidth = (int)(fontTool.getStringBounds(line[n], frc).getWidth());
+            if (textWidth > width) width = textWidth;
+            height += textHeight;
+            n++;
+        }
+        width += 2;
+        
+        int newX = toolX - width - 2;
+        int newY = toolY - height - 2;
+        
+        g.setColor(Color.YELLOW);
+        g.fillRect(newX, newY, width, height);
+        g.setColor(Color.BLACK);
+        
+        n = 0;
+        while (n < line.length) {
+            g.drawString(line[n], newX, newY + (n+1)*textHeight - 2);
+            n++;
+        }
+        
+    }
 }

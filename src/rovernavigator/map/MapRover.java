@@ -1,6 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:     Rover-Navigator
+ * Description: Science Olympiad Rover Navigator Scoring Program
+ * 
+ * File:        map/MapRover.java
+ * 
+ * Created:     June 2013
+ * 
+ * Repository:  https://github.com/brianh9640/rover-navigator
+ * 
  */
 package rovernavigator.map;
 

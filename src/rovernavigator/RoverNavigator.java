@@ -1,6 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:     Rover-Navigator
+ * Description: Science Olympiad Rover Navigator Scoring Program
+ * 
+ * File:        RoverNavigator.java
+ * 
+ * Created:     June 2013
+ * 
+ * Repository:  https://github.com/brianh9640/rover-navigator
+ * 
  */
 package rovernavigator;
 
@@ -74,7 +81,7 @@ public class RoverNavigator extends JPanel implements ActionListener {
         });
         
         map = new MapDef();
-        map.readMap();
+        map.readMap("mapA.xml");
         
         commands = new CommandList();
         panelCommands.setMain(this);

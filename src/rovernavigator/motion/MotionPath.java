@@ -1,6 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:     Rover-Navigator
+ * Description: Science Olympiad Rover Navigator Scoring Program
+ * 
+ * File:        motion/MotionPath.java
+ * 
+ * Created:     June 2013
+ * 
+ * Repository:  https://github.com/brianh9640/rover-navigator
+ * 
  */
 package rovernavigator.motion;
 
@@ -28,6 +35,8 @@ public class MotionPath {
     public int experiments;
     public TestResult testResult[];
     
+    //public int 
+    
     protected double travelDistance;
     protected double travelDegrees;
     protected double experimentError;
@@ -54,6 +63,7 @@ public class MotionPath {
         
         travelDistance = 0.0;
         travelDegrees  = 0.0;
+        experimentError = 0.0;
     }
 
     public void clearExperiments() {
@@ -66,21 +76,42 @@ public class MotionPath {
                 while (e < experiments) {
                     e++;
                     testResult[e] = new TestResult();
+                    testResult[e].id = main.map.experiment[e].id;
                     testResult[e].distError = main.map.getMaxDimension();
                 }
             }
         }
         experimentError = 0.0;
     }
+
+    public TestResult getTestResult(String id) {
+        int e = 0;
+        while (e < experiments) {
+            e++;
+            if (testResult[e].id.equalsIgnoreCase(id)) return testResult[e];
+        }
+        
+        return null;
+    }
+    
+    public int findTestResult(String id) {
+        int e = 0;
+        while (e < experiments) {
+            e++;
+            if (testResult[e].id.equalsIgnoreCase(id)) return e;
+        }
+        
+        return 0;
+    }
     
     public void updatePath() {
+        clear();
         calcPath();
         
         hazardCheck();
     }
     
     public void calcPath() {
-        clearPath();
 
         if (main.map == null) return;
         if (main.commands == null) return;
@@ -118,10 +149,20 @@ public class MotionPath {
                 case CommandList.COMMAND_TEST :
                     MapExperiment experiment = main.map.getExperiment(main.commands.note[c]);
                     if (experiment != null) {
-                        point[points].testID = experiment.id;
-                        point[points].testError = experiment.point.distance(rover.point.x, rover.point.y);
-                        System.out.println(experiment.id + " Error = " + point[points].testError);
-                        experimentError += point[points].testError;
+                        
+                        int e = findTestResult(experiment.id);
+                        testResult[e].id = experiment.id;
+                        testResult[e].point.x = rover.point.x;
+                        testResult[e].point.y = rover.point.y;
+                        testResult[e].distError = experiment.point.distance(rover.point.x, rover.point.y);
+                        testResult[e].completed = true;
+                        
+//                        point[points].testID = experiment.id;
+//                        point[points].testError = experiment.point.distance(rover.point.x, rover.point.y);
+//                        System.out.println(experiment.id + " Error = " + point[points].testError);
+//                        System.out.println(experiment.point.toString());
+//                        System.out.println(rover.point.toString());
+                        experimentError += testResult[e].distError;
                     }
                     break;
             }

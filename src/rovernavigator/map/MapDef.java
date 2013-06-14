@@ -1,6 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:     Rover-Navigator
+ * Description: Science Olympiad Rover Navigator Scoring Program
+ * 
+ * File:        map/MapDef.java
+ * 
+ * Created:     June 2013
+ * 
+ * Repository:  https://github.com/brianh9640/rover-navigator
+ * 
  */
 package rovernavigator.map;
 
@@ -24,6 +31,7 @@ public class MapDef {
     public static final int MAX_EXPERIMENTS     = 100;
     public static final int MAX_HAZARDS         = 100;
     
+    public static final String MAP_FILE_EXTENSION    = "xml";
     
     public String  name;
     public String  units;
@@ -79,7 +87,7 @@ public class MapDef {
         return height;
     }
     
-    public void readMap() {
+    public void readMap(String filename) {
         boolean sectionDescription = false;
         boolean sectionRover = false;
         boolean sectionExperiments = false;
@@ -90,7 +98,7 @@ public class MapDef {
 
         clear();
 
-        File xmlFile = new File("mapA.xml");
+        File xmlFile = new File(filename);
         InputStream is;
         try {
             is = new FileInputStream(xmlFile);

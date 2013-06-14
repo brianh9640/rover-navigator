@@ -1,6 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:     Rover-Navigator
+ * Description: Science Olympiad Rover Navigator Scoring Program
+ * 
+ * File:        PanelCommands.java
+ * 
+ * Created:     June 2013
+ * 
+ * Repository:  https://github.com/brianh9640/rover-navigator
+ * 
  */
 package rovernavigator;
 
@@ -189,7 +196,7 @@ public class PanelCommands extends javax.swing.JPanel {
     public void outputCompiledCommands() {
         String textCmds = "";
         DecimalFormat formatAngle = new DecimalFormat("###");
-        DecimalFormat formatDistance = new DecimalFormat("###.#");
+        DecimalFormat formatDistance = new DecimalFormat("###.0");
         
         int c = 0;
         while (c < main.commands.count) {

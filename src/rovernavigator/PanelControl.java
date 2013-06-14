@@ -1,6 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:     Rover-Navigator
+ * Description: Science Olympiad Rover Navigator Scoring Program
+ * 
+ * File:        PanelControl.java
+ * 
+ * Created:     June 2013
+ * 
+ * Repository:  https://github.com/brianh9640/rover-navigator
+ * 
  */
 package rovernavigator;
 
@@ -13,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import rovernavigator.map.MapDef;
 import rovernavigator.motion.CommandList;
 
 /**
@@ -113,6 +121,23 @@ public class PanelControl extends javax.swing.JPanel {
 
     }
 
+    public void mapLoad() {
+        JFileChooser fc = new JFileChooser();
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Rover Maps", MapDef.MAP_FILE_EXTENSION);
+        fc.setFileFilter(filter);
+        if (fileLocPath != null) {
+            fc.setCurrentDirectory(new File(fileLocPath));
+        }
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            main.map.readMap(file.getAbsoluteFile().toString());
+            main.panelMap.repaint();
+        }
+
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,8 +156,8 @@ public class PanelControl extends javax.swing.JPanel {
         buttonCmdNew = new javax.swing.JButton();
         buttonCmdLoad = new javax.swing.JButton();
         buttonCmdSave = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        buttonMapLoad = new javax.swing.JButton();
+        buttonRuleLoad = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         buttonUpdatePath = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
@@ -196,19 +221,24 @@ public class PanelControl extends javax.swing.JPanel {
         });
         jToolBar1.add(buttonCmdSave);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/map_open_hdd.png"))); // NOI18N
-        jButton1.setToolTipText("Load Map from Drive");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        buttonMapLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/map_open_hdd.png"))); // NOI18N
+        buttonMapLoad.setToolTipText("Load Map from Drive");
+        buttonMapLoad.setFocusable(false);
+        buttonMapLoad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonMapLoad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonMapLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonMapLoadActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(buttonMapLoad);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/rule_open_hdd.png"))); // NOI18N
-        jButton2.setToolTipText("Load Rules from Drive");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
+        buttonRuleLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/rule_open_hdd.png"))); // NOI18N
+        buttonRuleLoad.setToolTipText("Load Rules from Drive");
+        buttonRuleLoad.setFocusable(false);
+        buttonRuleLoad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonRuleLoad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(buttonRuleLoad);
         jToolBar1.add(jSeparator1);
 
         buttonUpdatePath.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/arrow_plain_green_E.png"))); // NOI18N
@@ -368,20 +398,25 @@ public class PanelControl extends javax.swing.JPanel {
         
     }//GEN-LAST:event_checkboxRoverStartActionPerformed
 
+    private void buttonMapLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMapLoadActionPerformed
+        mapLoad();
+        
+    }//GEN-LAST:event_buttonMapLoadActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCmdLoad;
     private javax.swing.JButton buttonCmdNew;
     private javax.swing.JButton buttonCmdSave;
+    private javax.swing.JButton buttonMapLoad;
     private javax.swing.JButton buttonMapZoomIn;
     private javax.swing.JButton buttonMapZoomOut;
     private javax.swing.JButton buttonMapZoomReset;
     private javax.swing.JButton buttonProgExit;
+    private javax.swing.JButton buttonRuleLoad;
     private javax.swing.JButton buttonUpdatePath;
     private javax.swing.JCheckBox checkboxRover;
     private javax.swing.JCheckBox checkboxRoverPath;
     private javax.swing.JCheckBox checkboxRoverStart;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
