@@ -32,7 +32,8 @@ public class PanelControl extends javax.swing.JPanel {
 
     RoverNavigator main;
 
-    private String fileLocPath = null;
+    private String fileLocPathCommands = null;
+    private String fileLocPathMaps = null;
 
     /**
      * Creates new form PanelControl
@@ -55,8 +56,8 @@ public class PanelControl extends javax.swing.JPanel {
 
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Rover Programs", CommandList.PROGRAM_EXTENSION);
         fc.setFileFilter(filter);
-        if (fileLocPath != null) {
-            fc.setCurrentDirectory(new File(fileLocPath));
+        if (fileLocPathCommands != null) {
+            fc.setCurrentDirectory(new File(fileLocPathCommands));
         } else {
             fc.setCurrentDirectory(new File("."));
         }
@@ -65,7 +66,7 @@ public class PanelControl extends javax.swing.JPanel {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
                 File file = fc.getSelectedFile();
-                fileLocPath = fc.getSelectedFile().getPath();
+                fileLocPathCommands = fc.getSelectedFile().getPath();
 //                if (!file.canWrite()) {
 //                    // TODO add cannot write error message
 //                    return;
@@ -89,8 +90,8 @@ public class PanelControl extends javax.swing.JPanel {
 
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Rover Programs", CommandList.PROGRAM_EXTENSION);
         fc.setFileFilter(filter);
-        if (fileLocPath != null) {
-            fc.setCurrentDirectory(new File(fileLocPath));
+        if (fileLocPathCommands != null) {
+            fc.setCurrentDirectory(new File(fileLocPathCommands));
         } else {
             fc.setCurrentDirectory(new File("."));
         }
@@ -98,7 +99,7 @@ public class PanelControl extends javax.swing.JPanel {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
                 File file = fc.getSelectedFile();
-                fileLocPath = fc.getSelectedFile().getPath();
+                fileLocPathCommands = fc.getSelectedFile().getPath();
 //                if (!file.canWrite()) {
 //                    // TODO add cannot write error message
 //                    return;
@@ -127,14 +128,15 @@ public class PanelControl extends javax.swing.JPanel {
 
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Rover Maps", MapDef.MAP_FILE_EXTENSION);
         fc.setFileFilter(filter);
-        if (fileLocPath != null) {
-            fc.setCurrentDirectory(new File(fileLocPath));
+        if (fileLocPathMaps != null) {
+            fc.setCurrentDirectory(new File(fileLocPathMaps));
         } else {
             fc.setCurrentDirectory(new File("."));
         }
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
+            fileLocPathMaps = fc.getSelectedFile().getPath();
             main.map.readMap(file.getAbsoluteFile().toString());
             main.updateMotionPath();
         }
@@ -155,11 +157,12 @@ public class PanelControl extends javax.swing.JPanel {
         checkboxRoverPath = new javax.swing.JCheckBox();
         checkboxRover = new javax.swing.JCheckBox();
         jToolBar1 = new javax.swing.JToolBar();
+        buttonMapLoad = new javax.swing.JButton();
+        buttonRuleLoad = new javax.swing.JButton();
+        jSeparator5 = new javax.swing.JToolBar.Separator();
         buttonCmdNew = new javax.swing.JButton();
         buttonCmdLoad = new javax.swing.JButton();
         buttonCmdSave = new javax.swing.JButton();
-        buttonMapLoad = new javax.swing.JButton();
-        buttonRuleLoad = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         buttonUpdatePath = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
@@ -190,6 +193,27 @@ public class PanelControl extends javax.swing.JPanel {
         jToolBar1.setFloatable(false);
         jToolBar1.setMinimumSize(new java.awt.Dimension(200, 48));
         jToolBar1.setPreferredSize(new java.awt.Dimension(200, 48));
+
+        buttonMapLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/map_open_hdd.png"))); // NOI18N
+        buttonMapLoad.setToolTipText("Load Map from Drive");
+        buttonMapLoad.setFocusable(false);
+        buttonMapLoad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonMapLoad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonMapLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonMapLoadActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(buttonMapLoad);
+
+        buttonRuleLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/rule_open_hdd.png"))); // NOI18N
+        buttonRuleLoad.setToolTipText("Load Rules from Drive");
+        buttonRuleLoad.setEnabled(false);
+        buttonRuleLoad.setFocusable(false);
+        buttonRuleLoad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonRuleLoad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(buttonRuleLoad);
+        jToolBar1.add(jSeparator5);
 
         buttonCmdNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/file_yellow_empty.png"))); // NOI18N
         buttonCmdNew.setToolTipText("Clear Command List");
@@ -223,26 +247,6 @@ public class PanelControl extends javax.swing.JPanel {
             }
         });
         jToolBar1.add(buttonCmdSave);
-
-        buttonMapLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/map_open_hdd.png"))); // NOI18N
-        buttonMapLoad.setToolTipText("Load Map from Drive");
-        buttonMapLoad.setFocusable(false);
-        buttonMapLoad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        buttonMapLoad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        buttonMapLoad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonMapLoadActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(buttonMapLoad);
-
-        buttonRuleLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/rule_open_hdd.png"))); // NOI18N
-        buttonRuleLoad.setToolTipText("Load Rules from Drive");
-        buttonRuleLoad.setEnabled(false);
-        buttonRuleLoad.setFocusable(false);
-        buttonRuleLoad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        buttonRuleLoad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(buttonRuleLoad);
         jToolBar1.add(jSeparator1);
 
         buttonUpdatePath.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/arrow_plain_green_E.png"))); // NOI18N
@@ -434,6 +438,7 @@ public class PanelControl extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
+    private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

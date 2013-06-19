@@ -57,6 +57,7 @@ public class MapDraw {
     protected Font fontGrid;
     protected Font fontTool;
     protected int  fontSizeGrid;
+    protected int  fontSizeTool;
     
     protected int areaWidth = 10;
     protected int areaHeight = 10;
@@ -71,8 +72,11 @@ public class MapDraw {
     public MapDraw() {
         main = null;
         
-        fontGrid = new Font("Arial",Font.PLAIN, 12);
-        fontTool = new Font("Arial",Font.PLAIN, 14);
+        fontSizeGrid = 12;
+        fontSizeTool = 14;
+        
+        fontGrid = new Font("Arial",Font.PLAIN, fontSizeGrid);
+        fontTool = new Font("Arial",Font.PLAIN, fontSizeTool);
 
         mapX = 0;
         mapY = 0;
@@ -136,7 +140,7 @@ public class MapDraw {
             areaWidth = areaHeight;
         }
         if (areaWidth < areaHeight) {
-            yOffset = (areaHeight - areaWidth) / 2;
+            yOffset = (areaHeight - areaWidth) / 2 * -1;
             areaHeight = areaWidth;
         }
         
@@ -434,6 +438,11 @@ public class MapDraw {
     }
 
     public void mapText(Graphics g,String text,int x,int y,int hpos,int vpos) {
+        double fontScale = zoomScale;
+        if (fontScale > 1.0) fontScale /= 2.0;
+        if (fontScale < 1.0) fontScale = 1.0;
+        if (fontScale > 3.0) fontScale = 3.0;
+        fontGrid = new Font("Arial",Font.PLAIN, (int) ((double) fontSizeGrid * fontScale));
         g.setFont(fontGrid);
 
         AffineTransform affineTransform = new AffineTransform();     

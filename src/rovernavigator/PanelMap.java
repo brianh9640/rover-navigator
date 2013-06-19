@@ -83,11 +83,11 @@ public class PanelMap extends JPanel implements MouseWheelListener,MouseMotionLi
 
     @Override
     public void paintComponent(Graphics g) {
-       super.paintComponent(g);
+        super.paintComponent(g);
 
         clearPanel(g);
         if (main.map == null) return;
-        Rectangle size = g.getClipBounds();
+        Dimension size = this.getSize();
         mapDraw.redrawMap(g,size.width,size.height);        
     }
 
