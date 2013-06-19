@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -46,12 +47,7 @@ public class PanelControl extends javax.swing.JPanel {
         checkboxRover.setSelected(main.showRover);
         checkboxRoverPath.setSelected(main.showRoverPath);
         checkboxRoverStart.setSelected(main.showRoverStart);
-    }
-
-    public void updateStatus() {
-        labelDistance.setText(new Double(main.motionPath.getTravelDistance()).toString());
-        labelDegrees.setText(new Double(main.motionPath.getTravelDegrees()).toString());
-        labelExperimentError.setText(new Double(main.motionPath.getExperimentError()).toString());
+        checkboxShowResults.setSelected(main.showResultsPanel);
     }
 
     public void commandListSave() {
@@ -61,7 +57,10 @@ public class PanelControl extends javax.swing.JPanel {
         fc.setFileFilter(filter);
         if (fileLocPath != null) {
             fc.setCurrentDirectory(new File(fileLocPath));
+        } else {
+            fc.setCurrentDirectory(new File("."));
         }
+            
         int returnVal = fc.showSaveDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
@@ -74,7 +73,6 @@ public class PanelControl extends javax.swing.JPanel {
                 String filename = file.getAbsoluteFile().toString();
                 String extension = "." + CommandList.PROGRAM_EXTENSION;
                 if (filename.indexOf(extension) < 0) filename += extension;
-                System.out.println(filename);
                 FileWriter outputStream;
                 outputStream = new FileWriter(filename);
                 outputStream.write(main.panelCommands.getCommandText());
@@ -82,7 +80,7 @@ public class PanelControl extends javax.swing.JPanel {
             } catch (IOException ex) {
                 Logger.getLogger(PanelControl.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        } else { main.panelMap.repaint(); }
 
     }
 
@@ -93,6 +91,8 @@ public class PanelControl extends javax.swing.JPanel {
         fc.setFileFilter(filter);
         if (fileLocPath != null) {
             fc.setCurrentDirectory(new File(fileLocPath));
+        } else {
+            fc.setCurrentDirectory(new File("."));
         }
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -114,10 +114,11 @@ public class PanelControl extends javax.swing.JPanel {
 
                 inputStream.close();
                 main.panelCommands.setCommandText(stringBuilder.toString());
+                main.updateMotionPath();
             } catch (IOException ex) {
                 Logger.getLogger(PanelControl.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        } else { main.panelMap.repaint(); }
 
     }
 
@@ -128,13 +129,16 @@ public class PanelControl extends javax.swing.JPanel {
         fc.setFileFilter(filter);
         if (fileLocPath != null) {
             fc.setCurrentDirectory(new File(fileLocPath));
+        } else {
+            fc.setCurrentDirectory(new File("."));
         }
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             main.map.readMap(file.getAbsoluteFile().toString());
-            main.panelMap.repaint();
+            main.updateMotionPath();
         }
+        main.panelMap.repaint();
 
     }
     
@@ -150,8 +154,6 @@ public class PanelControl extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JSeparator();
         checkboxRoverPath = new javax.swing.JCheckBox();
         checkboxRover = new javax.swing.JCheckBox();
-        labelDistance = new javax.swing.JLabel();
-        labelDegrees = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         buttonCmdNew = new javax.swing.JButton();
         buttonCmdLoad = new javax.swing.JButton();
@@ -166,8 +168,8 @@ public class PanelControl extends javax.swing.JPanel {
         buttonMapZoomReset = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         buttonProgExit = new javax.swing.JButton();
-        labelExperimentError = new javax.swing.JLabel();
         checkboxRoverStart = new javax.swing.JCheckBox();
+        checkboxShowResults = new javax.swing.JCheckBox();
 
         checkboxRoverPath.setText("Show Rover Path");
         checkboxRoverPath.setName("checkboxRoverPath"); // NOI18N
@@ -185,10 +187,6 @@ public class PanelControl extends javax.swing.JPanel {
             }
         });
 
-        labelDistance.setText("Distance");
-
-        labelDegrees.setText("Degrees");
-
         jToolBar1.setFloatable(false);
         jToolBar1.setMinimumSize(new java.awt.Dimension(200, 48));
         jToolBar1.setPreferredSize(new java.awt.Dimension(200, 48));
@@ -197,6 +195,11 @@ public class PanelControl extends javax.swing.JPanel {
         buttonCmdNew.setToolTipText("Clear Command List");
         buttonCmdNew.setMargin(new java.awt.Insets(4, 4, 4, 4));
         buttonCmdNew.setPreferredSize(new java.awt.Dimension(40, 40));
+        buttonCmdNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCmdNewActionPerformed(evt);
+            }
+        });
         jToolBar1.add(buttonCmdNew);
 
         buttonCmdLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/file_yellow_open_hdd.png"))); // NOI18N
@@ -235,6 +238,7 @@ public class PanelControl extends javax.swing.JPanel {
 
         buttonRuleLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/rule_open_hdd.png"))); // NOI18N
         buttonRuleLoad.setToolTipText("Load Rules from Drive");
+        buttonRuleLoad.setEnabled(false);
         buttonRuleLoad.setFocusable(false);
         buttonRuleLoad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonRuleLoad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -298,12 +302,18 @@ public class PanelControl extends javax.swing.JPanel {
         });
         jToolBar1.add(buttonProgExit);
 
-        labelExperimentError.setText("Error");
-
         checkboxRoverStart.setText("Rover Start");
         checkboxRoverStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkboxRoverStartActionPerformed(evt);
+            }
+        });
+
+        checkboxShowResults.setText("Show Results");
+        checkboxShowResults.setName("checkboxRover"); // NOI18N
+        checkboxShowResults.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkboxShowResultsActionPerformed(evt);
             }
         });
 
@@ -319,31 +329,22 @@ public class PanelControl extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(checkboxRoverPath)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(checkboxRover)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelDistance, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelDegrees, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelExperimentError, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                        .addComponent(checkboxRover)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(checkboxShowResults)))
+                .addContainerGap(204, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkboxRoverPath)
                     .addComponent(checkboxRover)
-                    .addComponent(checkboxRoverStart))
-                .addGap(63, 63, 63))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(labelDistance)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelDegrees)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelExperimentError)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(checkboxRoverStart)
+                    .addComponent(checkboxShowResults))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -403,6 +404,17 @@ public class PanelControl extends javax.swing.JPanel {
         
     }//GEN-LAST:event_buttonMapLoadActionPerformed
 
+    private void buttonCmdNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCmdNewActionPerformed
+        main.panelCommands.setCommandText("");
+        main.updateMotionPath();
+        
+    }//GEN-LAST:event_buttonCmdNewActionPerformed
+
+    private void checkboxShowResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxShowResultsActionPerformed
+        main.showResultsPanel = checkboxShowResults.isSelected();
+        main.layoutUpdate();
+    }//GEN-LAST:event_checkboxShowResultsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCmdLoad;
     private javax.swing.JButton buttonCmdNew;
@@ -417,13 +429,11 @@ public class PanelControl extends javax.swing.JPanel {
     private javax.swing.JCheckBox checkboxRover;
     private javax.swing.JCheckBox checkboxRoverPath;
     private javax.swing.JCheckBox checkboxRoverStart;
+    private javax.swing.JCheckBox checkboxShowResults;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar jToolBar1;
-    public javax.swing.JLabel labelDegrees;
-    public javax.swing.JLabel labelDistance;
-    private javax.swing.JLabel labelExperimentError;
     // End of variables declaration//GEN-END:variables
 }

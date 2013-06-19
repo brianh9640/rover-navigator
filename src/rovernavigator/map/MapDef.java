@@ -63,6 +63,9 @@ public class MapDef {
         dpmHeight = 30.0;
         
         roverStart = new MapRover();
+        roverStart.point.x = 10;
+        roverStart.point.y = 10;
+        roverStart.heading = 0;
         
         experiments = 0;
         experiment = new MapExperiment[MAX_EXPERIMENTS + 1];

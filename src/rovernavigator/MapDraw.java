@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
@@ -55,6 +56,7 @@ public class MapDraw {
     
     protected Font fontGrid;
     protected Font fontTool;
+    protected int  fontSizeGrid;
     
     protected int areaWidth = 10;
     protected int areaHeight = 10;
@@ -113,12 +115,13 @@ public class MapDraw {
         g.fillRect(0, 0, areaWidth, areaHeight);
         
         calcMapScale(g);
-        drawRoverStart(g);
         drawHazards(g);
         drawGrid(g);
-        drawExperiments(g);
         
-        drawMotionPath(g);
+        drawRoverStart(g);
+        if (main.showRover) drawMotionRovers(g);
+        if (main.showRoverPath) drawMotionPath(g);
+        drawExperiments(g);
         
         if (toolShow) drawToolTip(g);
     }    
@@ -155,42 +158,107 @@ public class MapDraw {
     }
     
     public void drawRover(Graphics g,MapRover rover) {
-        Graphics2D g2 = (Graphics2D) g;
+        /*
+         *
+         *      4--7--1
+         *      |     |
+         *      |     |
+         *     6|  0  |5
+         *      |     |
+         *      |     |
+         *      3--8--2
+         * 
+         * 
+         */
         
-        Point2D.Double p0 = new Point2D.Double();
+        Point2D.Double rp[] = new Point2D.Double[20];
+        
+        rp[ 0] = new Point2D.Double( 0.00, 0.00);
+        rp[ 1] = new Point2D.Double( 0.75, 1.50);
+        rp[ 2] = new Point2D.Double( 0.75,-1.50);
+        rp[ 3] = new Point2D.Double(-0.75,-1.50);
+        rp[ 4] = new Point2D.Double(-0.75, 1.50);
+        rp[ 5] = new Point2D.Double( 0.75, 0.00);
+        rp[ 6] = new Point2D.Double(-0.75, 0.00);
+        rp[ 7] = new Point2D.Double( 0.00, 1.50);
+        rp[ 8] = new Point2D.Double( 0.00,-1.50);
+
+        int pts = 9;
+        Graphics2D g2 = (Graphics2D) g;
+//        Stroke strokeOrig = g2.getStroke();
+
+//        g2.setStroke(new BasicStroke(1));
+        g2.setColor(new Color(0x00,0x00,0x00));
+        drawRoverTire(g2,0,rover,-0.75,-0.75);
+        drawRoverTire(g2,1,rover, 0.75,-0.75);
+        drawRoverTire(g2,0,rover,-0.75, 0.25);
+        drawRoverTire(g2,1,rover, 0.75, 0.25);
+        drawRoverTire(g2,0,rover,-0.75, 1.50);
+        drawRoverTire(g2,1,rover, 0.75, 1.50);
+
+        int p = 0;
+        while (p < pts) {
+            rp[p].x += rover.point.x;
+            rp[p].y += rover.point.y;
+            if (p > 0) rp[p] = pointTransform(rp[0],rp[p],rover.heading);
+            p++;
+        }
+        
+        g2.setColor(new Color(0xd0,0xd0,0xd0));
+        drawLine2Fill(g2,rp[1],rp[4],rp[2],rp[3]);
+        
+//        g2.setStroke(new BasicStroke(2));
+        
+//        mapLine(g2,rp[1],rp[2]);
+//        mapLine(g2,rp[2],rp[3]);
+//        mapLine(g2,rp[3],rp[4]);
+//        mapLine(g2,rp[4],rp[1]);
+        g2.setColor(new Color(0xff,0xff,0xff));
+        mapLine(g2,rp[5],rp[6]);
+        mapLine(g2,rp[7],rp[8]);
+        mapLine(g2,rp[5],rp[7]);
+        mapLine(g2,rp[6],rp[7]);
+        
+//        g2.setStroke(strokeOrig);
+        
+    }
+    
+    public void drawRoverTire(Graphics2D g2,int right,MapRover rover,double xs,double ys) {
         Point2D.Double p1 = new Point2D.Double();
         Point2D.Double p2 = new Point2D.Double();
         Point2D.Double p3 = new Point2D.Double();
         Point2D.Double p4 = new Point2D.Double();
-        g2.setColor(new Color(0x00,0x00,0x90));
+
+        double x = rover.point.x + xs;
+        double y = rover.point.y + ys;
         
-        p0.x = rover.point.x;
-        p0.y = rover.point.y;
-        p1.x = rover.point.x - 0.75;
-        p1.y = rover.point.y + 1.5;
-        p2.x = rover.point.x + 0.75;
-        p2.y = rover.point.y + 1.5;
-        p3.x = rover.point.x + 0.75;
-        p3.y = rover.point.y - 1.5;
-        p4.x = rover.point.x - 0.75;
-        p4.y = rover.point.y - 1.5;
-        
-        p0 = pointTransform(rover.point,p0,rover.heading);
+        p1.x = x;
+        p1.y = y;
+        if (right != 0) {
+            p2.x = x + 0.50;
+            p2.y = y;
+            p4.x = x + 0.50;
+            p4.y = y - 0.75;
+        }
+        else {
+            p2.x = x - 0.50;
+            p2.y = y;
+            p4.x = x - 0.50;
+            p4.y = y - 0.75;            
+        }
+        p3.x = x;
+        p3.y = y - 0.75;
+
         p1 = pointTransform(rover.point,p1,rover.heading);
         p2 = pointTransform(rover.point,p2,rover.heading);
         p3 = pointTransform(rover.point,p3,rover.heading);
         p4 = pointTransform(rover.point,p4,rover.heading);
 
-        Stroke strokeOrig = g2.getStroke();
-        g2.setStroke(new BasicStroke(2));
-        mapLine(g2,p1.x,p1.y,p2.x,p2.y);
-        mapLine(g2,p2.x,p2.y,p3.x,p3.y);
-        mapLine(g2,p3.x,p3.y,p4.x,p4.y);
-        mapLine(g2,p4.x,p4.y,p1.x,p1.y);
-        g2.setStroke(strokeOrig);
-        
-        mapLine(g2,p0.x,p0.y,p3.x,p3.y);
-        mapLine(g2,p0.x,p0.y,p4.x,p4.y);
+        drawLine2Fill(g2,p1,p2,p3,p4);
+//        mapLine(g2,p1,p2);
+//        mapLine(g2,p2,p4);
+//        mapLine(g2,p4,p3);
+                
     }
     
     public Point2D.Double pointTransform(Point2D.Double origin,Point2D.Double oldpt,double angle) {
@@ -288,20 +356,34 @@ public class MapDraw {
         while (p < main.motionPath.points) {
             p++;
             
-            if (main.motionPath.point[p-1].heading != main.motionPath.point[p].heading) {
-                if (main.showRover) drawRover(g2,main.motionPath.point[p]);
-            } else {
+            if (main.motionPath.point[p].point.distance(main.motionPath.point[p-1].point) > 0) {
                 g2.setColor(new Color(0xd0,0x80,0x00));
                 Stroke strokeOrig = g2.getStroke();
                 g2.setStroke(new BasicStroke(3));                
-                if (main.showRoverPath) mapLine(g2,main.motionPath.point[p-1].point.x,
+                mapLine(g2,main.motionPath.point[p-1].point.x,
                           main.motionPath.point[p-1].point.y,
                           main.motionPath.point[p].point.x,
                           main.motionPath.point[p].point.y);
                 g2.setStroke(strokeOrig);
             }
         }
-        if (main.showRover) drawRover(g2,main.motionPath.point[p]);
+    }
+    
+    public void drawMotionRovers(Graphics g) {
+        if (main.motionPath == null) return;
+        if (main.motionPath.points < 2) return;
+
+        //System.out.println("motion path points = " + motionPath.points);
+        
+        Graphics2D g2 = (Graphics2D) g;
+        
+        int p = 1;
+        while (p < main.motionPath.points) {
+            p++;
+            
+            drawRover(g2,main.motionPath.point[p]);
+        }
+        drawRover(g2,main.motionPath.point[p]);
     }
     
     public void drawGrid(Graphics g) {
@@ -394,6 +476,10 @@ public class MapDraw {
         
         g.drawLine(sx1, sy1, sx2, sy2);
         
+    }
+    
+    public void mapLine(Graphics g,Point2D.Double p1,Point2D.Double p2) {
+        mapLine(g,p1.x,p1.y,p2.x,p2.y);
     }
     
     public void mapLine(Graphics g,int width,double x1,double y1,double x2,double y2) {
@@ -568,4 +654,49 @@ public class MapDraw {
         }
         
     }
+    
+    protected void drawLine2Fill(Graphics2D g,Point2D.Double mp1,Point2D.Double mp2,Point2D.Double mp3,Point2D.Double mp4) {
+        Point p1 = new Point();
+        Point p2 = new Point();
+        Point p3 = new Point();
+        Point p4 = new Point();
+        
+        p1.x = getMapX(mp1.x);
+        p1.y = getMapY(mp1.y);
+        p2.x = getMapX(mp2.x);
+        p2.y = getMapY(mp2.y);
+        double vx1 = p2.x - p1.x;
+        double vy1 = p2.y - p1.y;
+        double mag1 = Math.sqrt(vx1*vx1 + vy1*vy1);
+        vx1 /= mag1;
+        vy1 /= mag1;
+        
+        p3.x = getMapX(mp3.x);
+        p3.y = getMapY(mp3.y);
+        p4.x = getMapX(mp4.x);
+        p4.y = getMapY(mp4.y);
+        double vx2 = p4.x - p3.x;
+        double vy2 = p4.y - p3.y;
+        double mag2 = Math.sqrt(vx2*vx2 + vy2*vy2);
+        vx2 /= mag2;
+        vy2 /= mag2;
+
+        Stroke strokeOrig = g.getStroke();
+        g.setStroke(new BasicStroke(2));
+        
+        double distance = 0;
+        while (distance < mag1) {
+            int sx1 = (int) ((double) p1.x + vx1 * (mag1 - distance) );
+            int sy1 = (int) ((double) p1.y + vy1 * (mag1 - distance) );
+            int sx2 = (int) ((double) p3.x + vx2 * (mag2 - distance) );
+            int sy2 = (int) ((double) p3.y + vy2 * (mag2 - distance) );
+            
+
+            g.drawLine(sx1, sy1, sx2, sy2);
+            distance += 1.0;
+        }
+        g.setStroke(strokeOrig);
+        
+    }
+    
 }

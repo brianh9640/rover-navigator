@@ -29,15 +29,11 @@
                       <Component id="checkboxRoverPath" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="checkboxRover" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="checkboxShowResults" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="labelDistance" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelDegrees" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelExperimentError" alignment="1" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="204" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -45,21 +41,14 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Component id="jToolBar1" min="-2" pref="45" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="checkboxRoverPath" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="checkboxRover" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="checkboxRoverStart" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="checkboxShowResults" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="labelDistance" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="labelDegrees" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="labelExperimentError" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="57" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -82,22 +71,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkboxRoverActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelDistance">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Distance"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelDegrees">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Degrees"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
     </Component>
     <Container class="javax.swing.JToolBar" name="jToolBar1">
       <Properties>
@@ -125,6 +98,9 @@
               <Dimension value="[40, 40]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCmdNewActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="buttonCmdLoad">
           <Properties>
@@ -180,6 +156,7 @@
               <Image iconType="3" name="/rovernavigator/images/rule_open_hdd.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Load Rules from Drive"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -260,17 +237,21 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="labelExperimentError">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Error"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JCheckBox" name="checkboxRoverStart">
       <Properties>
         <Property name="text" type="java.lang.String" value="Rover Start"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkboxRoverStartActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="checkboxShowResults">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Show Results"/>
+        <Property name="name" type="java.lang.String" value="checkboxRover" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkboxShowResultsActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+    <description>
+        <name>Map A</name>
+        <units>meters</units>
+        <width>100.0</width>
+        <height>100.0</height>
+    </description>
+    <rover>
+        <x>20.0</x><y>5.0</y>
+        <heading>0</heading>
+    </rover>
+    <experiments>
+        <experiment>
+            <id>A</id>
+            <name>Test A</name>
+            <point>
+                <x>50.0</x><y>12.5</y>
+            </point>            
+        </experiment>
+        <experiment>
+            <id>B</id>
+            <name>Test B</name>
+            <point>
+                <x>73.0</x><y>82.5</y>
+            </point>            
+        </experiment>
+        <experiment>
+            <id>C</id>
+            <name>Test C</name>
+            <point>
+                <x>14.3</x><y>91.5</y>
+            </point>            
+        </experiment>
+        <experiment>
+            <id>D</id>
+            <name>Test D</name>
+            <point>
+                <x>20.5</x><y>33.2</y>
+            </point>            
+        </experiment>
+    </experiments>
+    <hazards>
+        <hazard>
+            <id>1</id>
+            <type>avoid</type>
+            <shape>rectangle</shape>
+            <point>
+                <x>9.0</x><y>10.0</y>
+            </point>
+            <point>
+                <x>32.0</x><y>24.0</y>
+            </point>
+        </hazard>
+        <hazard>
+            <id>2</id>
+            <type>avoid</type>
+            <shape>rectangle</shape>
+            <point>
+                <x>52.0</x><y>37.5</y>
+            </point>
+            <point>
+                <x>79.0</x><y>61.0</y>
+            </point>
+        </hazard>
+        <hazard>
+            <id>3</id>
+            <type>avoid</type>
+            <shape>rectangle</shape>
+            <point>
+                <x>0</x><y>48.7</y>
+            </point>
+            <point>
+                <x>19.2</x><y>78.7</y>
+            </point>
+        </hazard>
+        <hazard>
+            <id>4</id>
+            <type>avoid</type>
+            <shape>circle</shape>
+            <point>
+                <x>60</x><y>30</y>
+            </point>
+            <radius>12</radius>
+        </hazard>
+    </hazards>
+</map>

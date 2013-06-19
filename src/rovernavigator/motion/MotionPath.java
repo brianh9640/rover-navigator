@@ -40,6 +40,8 @@ public class MotionPath {
     protected double travelDistance;
     protected double travelDegrees;
     protected double experimentError;
+    protected double experimentAvgError;
+    protected double pathScore;
 
     public MotionPath() {
         clear();
@@ -55,6 +57,8 @@ public class MotionPath {
     public double getTravelDistance() { return travelDistance; }
     public double getTravelDegrees() { return travelDegrees; }
     public double getExperimentError() { return experimentError; }
+    public double getExperimentAvgError() { return experimentAvgError; }
+    public double getPathScore() { return pathScore; }
     
     public void clearPath() {
         points = 0;
@@ -64,6 +68,8 @@ public class MotionPath {
         travelDistance = 0.0;
         travelDegrees  = 0.0;
         experimentError = 0.0;
+        experimentAvgError = 0.0;
+        pathScore = 0.0;
     }
 
     public void clearExperiments() {
@@ -109,6 +115,8 @@ public class MotionPath {
         calcPath();
         
         hazardCheck();
+        
+        calcPathScore();
     }
     
     public void calcPath() {
@@ -277,5 +285,24 @@ public class MotionPath {
         
     }
     
-    
+    private void calcPathScore() {
+        pathScore = 0.0;
+        
+        experimentError = 0.0;
+        experimentAvgError = 0.0;
+        
+        if (experiments == 0) return;
+        
+        int e = 0;
+        while (e < experiments) {
+            e++;
+            experimentError += testResult[e].distError;
+        }
+        
+        experimentAvgError = experimentError / (double) experiments;
+        
+        pathScore = this.travelDistance
+                  + this.travelDegrees / 10.0
+                  + this.experimentError * 100.0;
+    }
 }

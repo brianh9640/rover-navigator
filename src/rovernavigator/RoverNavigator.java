@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import rovernavigator.motion.CommandList;
@@ -32,18 +33,21 @@ public class RoverNavigator extends JPanel implements ActionListener {
     public static final int BORDER_PANEL                = 2;
     public static final int PANEL_LOGO_HEIGHT           = 100;
     public static final int PANEL_COMMANDS_WIDTH        = 210;
-    public static final int PANEL_CONTROL_HEIGHT        = 102;
+    public static final int PANEL_CONTROL_HEIGHT        = 80;
+    public static final int PANEL_RESULTS_WIDTH         = 166;
     
     JFrame              frameMain;
     PanelLogo           panelLogo;
     PanelMap            panelMap;
     PanelCommands       panelCommands;
     PanelControl        panelControl;
+    PanelResults        panelResults;
     
     public MapDef map;
     public CommandList commands;
     public MotionPath motionPath;
     
+    public boolean showResultsPanel = false;
     public boolean showRoverPath = true;
     public boolean showRover = true;
     public boolean showRoverStart = true;
@@ -62,6 +66,7 @@ public class RoverNavigator extends JPanel implements ActionListener {
         this.add(panelCommands);
         
         panelControl = new PanelControl();
+        panelControl.setBorder(new javax.swing.border.LineBorder(java.awt.Color.BLACK));
         panelControl.setMain(this);
         this.add(panelControl);
         
@@ -70,6 +75,9 @@ public class RoverNavigator extends JPanel implements ActionListener {
         panelMap.setBorder(new javax.swing.border.LineBorder(java.awt.Color.BLACK));
         panelMap.setMain(this);
         this.add(panelMap);
+        
+        panelResults = new PanelResults();
+        this.add(panelResults);
         
         layoutUpdate();
         
@@ -81,16 +89,18 @@ public class RoverNavigator extends JPanel implements ActionListener {
         });
         
         map = new MapDef();
-        map.readMap("mapA.xml");
+        //map.readMap("mapA.xml");
         
         commands = new CommandList();
         panelCommands.setMain(this);
         
         motionPath = new MotionPath();
         motionPath.setMain(this);
+
+        panelResults.setMain(this);
         
         //loadFakeCommands();
-        motionPath.updatePath();
+        updateMotionPath();
         
     }
     
@@ -116,10 +126,9 @@ public class RoverNavigator extends JPanel implements ActionListener {
         panelCommands.updateCommands();
         
         motionPath.updatePath();
-        panelControl.updateStatus();
+        panelResults.updateStatus();
         panelMap.repaint();
         panelControl.repaint();
-        
     }
     
     public int getWidth() {
@@ -153,6 +162,15 @@ public class RoverNavigator extends JPanel implements ActionListener {
         
         y += RoverNavigator.PANEL_CONTROL_HEIGHT + RoverNavigator.BORDER_PANEL;
         height = this.getHeight() - y - RoverNavigator.BORDER_PANEL;
+        if (showResultsPanel) {
+            panelResults.setVisible(true);
+            int x1 = this.getWidth() - RoverNavigator.PANEL_RESULTS_WIDTH;
+            panelResults.setBounds(x1, y, RoverNavigator.PANEL_RESULTS_WIDTH, height);
+            width -= RoverNavigator.PANEL_RESULTS_WIDTH;
+        } else {
+            panelResults.setVisible(false);
+        }
+        
         panelMap.setBounds(x,y,width,height);
    
     }

@@ -88,7 +88,7 @@ public class PanelMap extends JPanel implements MouseWheelListener,MouseMotionLi
         clearPanel(g);
         if (main.map == null) return;
         Rectangle size = g.getClipBounds();
-        mapDraw.redrawMap(g,size.width,size.height);
+        mapDraw.redrawMap(g,size.width,size.height);        
     }
 
     @Override
@@ -149,7 +149,6 @@ public class PanelMap extends JPanel implements MouseWheelListener,MouseMotionLi
                         msg += "\nError = " + formatError.format(result.distError);
                     }
                 }
-                System.out.println(msg);
                 mapDraw.defineToolTip(e.getX(),e.getY(),msg);
                 repaint();
                 return;

@@ -51,6 +51,8 @@ public class CommandList {
         }
     }
 
+    public int getCount() { return count; }
+    
     public int getType(int c) {
         if (c <= 0 || c > count) return 0;
         
