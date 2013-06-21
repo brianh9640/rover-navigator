@@ -49,6 +49,9 @@ public class PanelControl extends javax.swing.JPanel {
         checkboxRoverPath.setSelected(main.showRoverPath);
         checkboxRoverStart.setSelected(main.showRoverStart);
         checkboxShowResults.setSelected(main.showResultsPanel);
+        checkboxShowHazardHits.setSelected(main.showHazardHits);
+        
+        labelVersion.setText("Version " + main.version);        
     }
 
     public void commandListSave() {
@@ -173,6 +176,8 @@ public class PanelControl extends javax.swing.JPanel {
         buttonProgExit = new javax.swing.JButton();
         checkboxRoverStart = new javax.swing.JCheckBox();
         checkboxShowResults = new javax.swing.JCheckBox();
+        labelVersion = new javax.swing.JLabel();
+        checkboxShowHazardHits = new javax.swing.JCheckBox();
 
         checkboxRoverPath.setText("Show Rover Path");
         checkboxRoverPath.setName("checkboxRoverPath"); // NOI18N
@@ -321,34 +326,50 @@ public class PanelControl extends javax.swing.JPanel {
             }
         });
 
+        labelVersion.setText("Version 0.1.1");
+
+        checkboxShowHazardHits.setText("Show Hazard Hits");
+        checkboxShowHazardHits.setName("checkboxRover"); // NOI18N
+        checkboxShowHazardHits.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkboxShowHazardHitsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(checkboxRoverStart)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(checkboxRoverPath)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(checkboxRover)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(checkboxShowResults)))
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addComponent(checkboxRoverStart)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkboxRoverPath)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkboxRover)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkboxShowResults)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkboxShowHazardHits)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(labelVersion))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelVersion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkboxRoverPath)
                     .addComponent(checkboxRover)
                     .addComponent(checkboxRoverStart)
-                    .addComponent(checkboxShowResults))
-                .addContainerGap(57, Short.MAX_VALUE))
+                    .addComponent(checkboxShowResults)
+                    .addComponent(checkboxShowHazardHits))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -419,6 +440,12 @@ public class PanelControl extends javax.swing.JPanel {
         main.layoutUpdate();
     }//GEN-LAST:event_checkboxShowResultsActionPerformed
 
+    private void checkboxShowHazardHitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxShowHazardHitsActionPerformed
+        main.showHazardHits = checkboxShowHazardHits.isSelected();
+        if (main.panelMap != null) main.panelMap.repaint();
+        
+    }//GEN-LAST:event_checkboxShowHazardHitsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCmdLoad;
     private javax.swing.JButton buttonCmdNew;
@@ -433,6 +460,7 @@ public class PanelControl extends javax.swing.JPanel {
     private javax.swing.JCheckBox checkboxRover;
     private javax.swing.JCheckBox checkboxRoverPath;
     private javax.swing.JCheckBox checkboxRoverStart;
+    private javax.swing.JCheckBox checkboxShowHazardHits;
     private javax.swing.JCheckBox checkboxShowResults;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -440,5 +468,6 @@ public class PanelControl extends javax.swing.JPanel {
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel labelVersion;
     // End of variables declaration//GEN-END:variables
 }

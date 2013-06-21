@@ -36,6 +36,8 @@ public class RoverNavigator extends JPanel implements ActionListener {
     public static final int PANEL_CONTROL_HEIGHT        = 80;
     public static final int PANEL_RESULTS_WIDTH         = 166;
     
+    public String version = "0.02.00";
+    
     JFrame              frameMain;
     PanelLogo           panelLogo;
     PanelMap            panelMap;
@@ -51,6 +53,7 @@ public class RoverNavigator extends JPanel implements ActionListener {
     public boolean showRoverPath = true;
     public boolean showRover = true;
     public boolean showRoverStart = true;
+    public boolean showHazardHits = true;
         
     public RoverNavigator(JFrame frame) {    
         frameMain = frame;

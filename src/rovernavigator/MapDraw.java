@@ -127,6 +127,8 @@ public class MapDraw {
         if (main.showRoverPath) drawMotionPath(g);
         drawExperiments(g);
         
+        if (main.showHazardHits) drawHazardIntersects(g);
+        
         if (toolShow) drawToolTip(g);
     }    
     
@@ -208,15 +210,16 @@ public class MapDraw {
             p++;
         }
         
-        g2.setColor(new Color(0xd0,0xd0,0xd0));
+        g2.setColor(new Color(0xb0,0xb0,0xb0));
         drawLine2Fill(g2,rp[1],rp[4],rp[2],rp[3]);
         
 //        g2.setStroke(new BasicStroke(2));
         
-//        mapLine(g2,rp[1],rp[2]);
-//        mapLine(g2,rp[2],rp[3]);
-//        mapLine(g2,rp[3],rp[4]);
-//        mapLine(g2,rp[4],rp[1]);
+        g2.setColor(new Color(0x30,0x30,0x30));
+        mapLine(g2,rp[1],rp[2]);
+        mapLine(g2,rp[2],rp[3]);
+        mapLine(g2,rp[3],rp[4]);
+        mapLine(g2,rp[4],rp[1]);
         g2.setColor(new Color(0xff,0xff,0xff));
         mapLine(g2,rp[5],rp[6]);
         mapLine(g2,rp[7],rp[8]);
@@ -390,6 +393,26 @@ public class MapDraw {
         drawRover(g2,main.motionPath.point[p]);
     }
     
+    public void drawHazardIntersects(Graphics g) {
+        double x1;
+        double y1;
+        double x2;
+        double y2;
+        
+        g.setColor(new Color(0xff,0x00,0x00));
+        int h = 0;
+        while (h < main.motionPath.hazardIntersects) {
+            h++;
+            x1 = main.motionPath.hazardIntersect[h].point.x - 1.5;
+            y1 = main.motionPath.hazardIntersect[h].point.y - 1.5;
+            x2 = main.motionPath.hazardIntersect[h].point.x + 1.5;
+            y2 = main.motionPath.hazardIntersect[h].point.y + 1.5;
+
+            mapLine(g,3,x1,y1,x2,y2);
+            mapLine(g,3,x1,y2,x2,y1);
+        }
+    }
+    
     public void drawGrid(Graphics g) {
         g.setColor(Color.blue);
         
@@ -497,7 +520,11 @@ public class MapDraw {
         int sx2 = getMapX(x2);
         int sy2 = getMapY(y2);
         
-        g.drawLine(sx1, sy1, sx2, sy2);
+        Graphics2D g2 = (Graphics2D) g;
+        Stroke strokeOrig = g2.getStroke();
+        g2.setStroke(new BasicStroke(width));
+        g2.drawLine(sx1, sy1, sx2, sy2);
+        g2.setStroke(strokeOrig);
         
     }
 

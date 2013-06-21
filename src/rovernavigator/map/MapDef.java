@@ -85,6 +85,11 @@ public class MapDef {
         return null;
     }
     
+    public MapHazard getHazard(int h) {
+        if (h > 0 && h <= hazards) return hazard[h];
+        return null;
+    }
+        
     public double getMaxDimension() {
         if (width > height) return width;
         return height;

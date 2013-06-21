@@ -11,9 +11,12 @@
  */
 package rovernavigator.motion;
 
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import rovernavigator.RoverNavigator;
 import rovernavigator.map.MapDef;
 import rovernavigator.map.MapExperiment;
+import rovernavigator.map.MapHazard;
 import rovernavigator.map.MapRover;
 
 /**
@@ -25,6 +28,7 @@ public class MotionPath {
     public static final boolean DEBUG = false;
     
     public static final int MAX_PATH_POINTS         = 500;
+    public static final int MAX_INTERSECT_POINTS    = 40;
     
     RoverNavigator main;
     
@@ -35,7 +39,9 @@ public class MotionPath {
     public int experiments;
     public TestResult testResult[];
     
-    //public int 
+    public int hazardIntersects;
+    public HazardIntersect  hazardIntersect[];
+    
     
     protected double travelDistance;
     protected double travelDegrees;
@@ -50,6 +56,7 @@ public class MotionPath {
     public final void clear() {
         clearPath();
         clearExperiments();
+        clearHazardIntersects();
     }
 
     public void setMain(RoverNavigator main) { this.main = main; }
@@ -108,6 +115,11 @@ public class MotionPath {
         }
         
         return 0;
+    }
+    
+    public void clearHazardIntersects() {
+        hazardIntersects = 0;
+        hazardIntersect = new HazardIntersect[MAX_INTERSECT_POINTS + 1];
     }
     
     public void updatePath() {
@@ -275,14 +287,170 @@ public class MotionPath {
     
     private void hazardCheck() {
         
+        clearHazardIntersects();
         
-//        if (points < 2) return;
-//        
-//        int p = 1;
-//        while (p < points) {
-//            p++;
-//        }        
+        if (points < 2) return;
         
+        int p = 1;
+        while (p < points) {
+            if (point[p].point.distance(point[p+1].point) > 0.0) {
+                hazardCheckLine(p,point[p].point,point[p+1].point);
+            }
+            
+            p++;
+        }
+    }
+
+    private void hazardCheckLine(int p,Point2D.Double p1,Point2D.Double p2) {   
+        int h = 0;
+        Point2D.Double pointIntersect = null;
+        
+        Line2D.Double lineR = new Line2D.Double();
+        lineR.setLine(p1, p2);
+        while (h < main.map.hazards) {
+            h++;
+            MapHazard hz = main.map.getHazard(h);
+            if (hz != null) {
+                if (hz.shape == MapHazard.SHAPE_RECTANGLE) {
+                    Point2D.Double hp1 = new Point2D.Double();
+                    Point2D.Double hp2 = new Point2D.Double();
+                    hp1.x = hz.point[1].x;
+                    hp1.y = hz.point[1].y;
+                    hp2.x = hz.point[2].x;
+                    hp2.y = hz.point[2].y;
+//                    if (hp1.x > hp2.x) {
+//                        double tmp = hp2.x;
+//                        hp2.x = hp1.x;
+//                        hp1.x = tmp;
+//                    }
+//                    if (hp1.y > hp2.y) {
+//                        double tmp = hp2.y;
+//                        hp2.y = hp1.y;
+//                        hp1.y = tmp;
+//                    }
+                    
+                    Line2D.Double lineH = new Line2D.Double();
+                    lineH.x1 = hp1.x;
+                    lineH.y1 = hp1.y;
+                    lineH.x2 = hp1.x;
+                    lineH.y2 = hp2.y;
+                    pointIntersect = getIntersectionPoint(lineR,lineH);
+                    if (pointIntersect != null) {
+                        hazardAddIntersect(p,h,pointIntersect);
+                    }
+                    
+                    lineH.x1 = hp1.x;
+                    lineH.y1 = hp2.y;
+                    lineH.x2 = hp2.x;
+                    lineH.y2 = hp2.y;
+                    pointIntersect = getIntersectionPoint(lineR,lineH);
+                    if (pointIntersect != null) {
+                        hazardAddIntersect(p,h,pointIntersect);
+                    }
+                                        
+                    lineH.x1 = hp2.x;
+                    lineH.y1 = hp2.y;
+                    lineH.x2 = hp2.x;
+                    lineH.y2 = hp1.y;
+                    pointIntersect = getIntersectionPoint(lineR,lineH);
+                    if (pointIntersect != null) {
+                        hazardAddIntersect(p,h,pointIntersect);
+                    }
+                                        
+                    lineH.x1 = hp2.x;
+                    lineH.y1 = hp1.y;
+                    lineH.x2 = hp1.x;
+                    lineH.y2 = hp1.y;
+                    pointIntersect = getIntersectionPoint(lineR,lineH);
+                    if (pointIntersect != null) {
+                        hazardAddIntersect(p,h,pointIntersect);
+                    }
+                    
+                }
+                if (hz.shape == MapHazard.SHAPE_CIRCLE) {
+                    Circle circle = new Circle();
+                    circle.x = hz.point[1].x;
+                    circle.y = hz.point[1].y;
+                    circle.radius = hz.radius;
+                    getCircleLineIntersect(p,h,lineR,circle);
+                }
+            }
+        }
+        
+    }
+    
+    private Point2D.Double getIntersectionPoint(Line2D.Double lineA, Line2D.Double lineB) {
+        Point2D.Double p = null;
+        if (!lineA.intersectsLine(lineB)) return p;
+        
+        double d = (lineA.x1 - lineA.x2) * (lineB.y1 - lineB.y2) - (lineA.y1 - lineA.y2) * (lineB.x1 - lineB.x2);
+        if (d != 0) {
+            double xi = ((lineB.x1 - lineB.x2) * (lineA.x1 * lineA.y2 - lineA.y1 * lineA.x2) - (lineA.x1 - lineA.x2) * (lineB.x1 * lineB.y2 - lineB.y1 * lineB.x2)) / d;
+            double yi = ((lineB.y1 - lineB.y2) * (lineA.x1 * lineA.y2 - lineA.y1 * lineA.x2) - (lineA.y1 - lineA.y2) * (lineB.x1 * lineB.y2 - lineB.y1 * lineB.x2)) / d;
+
+            p = new Point2D.Double(xi, yi);
+
+        }
+        return p;
+    }
+    
+    private void getCircleLineIntersect(int p, int h,Line2D.Double line,Circle circle) {
+
+        double baX = line.x2 - line.x1;
+        double baY = line.y2 - line.y1;
+        double caX = circle.x - line.x1;
+        double caY = circle.y - line.y1;
+        
+        double a = baX * baX + baY * baY;
+        double bBy2 = baX * caX + baY * caY;
+        double c = caX * caX + caY * caY - circle.radius * circle.radius;
+        
+        double pBy2 = bBy2 / a;
+        double q = c / a;
+        
+        double disc = pBy2 * pBy2 - q;
+        if (disc < 0) return;  // no intersect
+        
+        double tmpSqrt = Math.sqrt(disc);
+        double abScalingFactor1 = -pBy2 + tmpSqrt;
+        double abScalingFactor2 = -pBy2 - tmpSqrt;
+        
+        Point2D.Double pt = new Point2D.Double();
+        pt.x = line.x1 - baX * abScalingFactor1;
+        pt.y = line.y1 - baY * abScalingFactor1;
+        
+        if (line.ptSegDist(pt) <= 0.0) hazardAddIntersect(p,h,pt);
+        if (disc == 0) return;
+        
+        pt = new Point2D.Double();
+        pt.x = line.x1 - baX * abScalingFactor2;
+        pt.y = line.y1 - baY * abScalingFactor2;
+        
+        if (line.ptSegDist(pt) <= 0.0) hazardAddIntersect(p,h,pt);
+        
+     }
+
+    static class Circle {
+        public double x, y;
+        public double radius;
+
+        public Circle(double x, double y, double radius) { this.x = x; this.y = y; this.radius = radius; }
+        public Circle() { x = 0.0; y = 0.0; radius = 0.0; }
+
+        @Override
+        public String toString() {
+            return "Circle [x=" + x + ", y=" + y + ", r=" +  radius + "] ";
+        }
+    }    
+    
+    private void hazardAddIntersect(int p,int h,Point2D.Double pt) {
+        if (hazardIntersects < MotionPath.MAX_INTERSECT_POINTS) hazardIntersects++;
+        hazardIntersect[hazardIntersects] = new HazardIntersect();
+        hazardIntersect[hazardIntersects].hazardN = h;
+        hazardIntersect[hazardIntersects].point = pt;
+        hazardIntersect[hazardIntersects].pathN = p;
+        
+        //System.out.println("Hazard Hit : " + h + "  point=" + pt.toString());
     }
     
     private void calcPathScore() {
