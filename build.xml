@@ -75,9 +75,12 @@
         <copy file="maps/map A.xml" flatten="true" todir="${dist.dir}/maps"/>
         <copy file="maps/map B.xml" flatten="true" todir="${dist.dir}/maps"/>
         <copy file="maps/map C.xml" flatten="true" todir="${dist.dir}/maps"/>
+        <copy file="maps/map D.xml" flatten="true" todir="${dist.dir}/maps"/>
         
         <copy file="programs/Program A.xpg" flatten="true" todir="${dist.dir}/programs"/>
         <copy file="programs/Program B.xpg" flatten="true" todir="${dist.dir}/programs"/>
+        <copy file="programs/Program D.xpg" flatten="true" todir="${dist.dir}/programs"/>
+        <copy file="programs/Program D Tier 2.xpg" flatten="true" todir="${dist.dir}/programs"/>
         
     </target>     
 </project>
