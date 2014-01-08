@@ -59,6 +59,8 @@ public class MapDraw {
     protected int  fontSizeGrid;
     protected int  fontSizeTool;
     
+    protected int  offsetExp;
+    
     protected int areaWidth = 10;
     protected int areaHeight = 10;
     
@@ -74,6 +76,7 @@ public class MapDraw {
         
         fontSizeGrid = 12;
         fontSizeTool = 14;
+        offsetExp = 1;
         
         fontGrid = new Font("Arial",Font.PLAIN, fontSizeGrid);
         fontTool = new Font("Arial",Font.PLAIN, fontSizeTool);
@@ -96,6 +99,16 @@ public class MapDraw {
     }
     
     public void setMain(RoverNavigator main) { this.main = main; }
+    
+    public void printable() {
+        fontSizeGrid = 24;
+        fontSizeTool = 36;
+        
+        fontGrid = new Font("Arial",Font.PLAIN, fontSizeGrid);
+        fontTool = new Font("Arial",Font.PLAIN, fontSizeTool);
+        offsetExp = 4;
+        
+    }
     
     public double zoomScale() { return zoomScale; }
     public void zoomScale(double newScale) { 
@@ -299,7 +312,7 @@ public class MapDraw {
             g.drawLine(sx-rad*2, sy, sx+rad*2, sy);
             g.drawLine(sx, sy-rad*2, sx, sy+rad*2);
             g.drawArc(sx-rad, sy-rad, rad*2, rad*2, 0, 360);
-            mapText(g,main.map.experiment[e].id,sx+rad+1,sy-rad-1,TEXT_LEFT,TEXT_BOTTOM);
+            mapText(g,main.map.experiment[e].id,sx+rad+offsetExp,sy-rad-offsetExp,TEXT_LEFT,TEXT_BOTTOM);
             
         }
         

@@ -177,6 +177,7 @@
             <point>
                 <x>30</x><y>85</y>
             </point>
+        </hazard>
         <hazard>
             <id>6</id>
             <type>avoid</type>

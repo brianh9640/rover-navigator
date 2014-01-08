@@ -34,9 +34,9 @@ public class RoverNavigator extends JPanel implements ActionListener {
     public static final int PANEL_LOGO_HEIGHT           = 100;
     public static final int PANEL_COMMANDS_WIDTH        = 210;
     public static final int PANEL_CONTROL_HEIGHT        = 80;
-    public static final int PANEL_RESULTS_WIDTH         = 166;
+    public static final int PANEL_RESULTS_WIDTH         = 180;
     
-    public String version = "0.02.00";
+    public String version = "0.03.00";
     
     JFrame              frameMain;
     PanelLogo           panelLogo;
@@ -190,8 +190,8 @@ public class RoverNavigator extends JPanel implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //GraphicsConfiguration gc;
         //Rectangle bounds = gc.getBounds();
-        frame.setLocation(50,50);
-        Dimension sizeMin = new Dimension(800,600);
+        frame.setLocation(20,20);
+        Dimension sizeMin = new Dimension(1000,800);
         frame.setMinimumSize(sizeMin);
 
         //Add contents to the window.

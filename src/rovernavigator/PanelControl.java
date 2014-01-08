@@ -11,6 +11,7 @@
  */
 package rovernavigator;
 
+import java.awt.print.PrinterJob;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -19,6 +20,14 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.MediaPrintableArea;
+import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.OrientationRequested;
+import javax.print.attribute.standard.PrintQuality;
+import javax.print.attribute.standard.PrinterResolution;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import rovernavigator.map.MapDef;
@@ -168,6 +177,7 @@ public class PanelControl extends javax.swing.JPanel {
         buttonCmdSave = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         buttonUpdatePath = new javax.swing.JButton();
+        buttonPrint = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         buttonMapZoomIn = new javax.swing.JButton();
         buttonMapZoomOut = new javax.swing.JButton();
@@ -265,6 +275,20 @@ public class PanelControl extends javax.swing.JPanel {
             }
         });
         jToolBar1.add(buttonUpdatePath);
+
+        buttonPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/printer.png"))); // NOI18N
+        buttonPrint.setText("");
+        buttonPrint.setFocusable(false);
+        buttonPrint.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonPrint.setMaximumSize(new java.awt.Dimension(39, 39));
+        buttonPrint.setMinimumSize(new java.awt.Dimension(39, 39));
+        buttonPrint.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPrintActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(buttonPrint);
         jToolBar1.add(jSeparator3);
 
         buttonMapZoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/magnifier_plus_blue.png"))); // NOI18N
@@ -352,8 +376,8 @@ public class PanelControl extends javax.swing.JPanel {
                 .addComponent(checkboxShowHazardHits)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelVersion))
         );
         layout.setVerticalGroup(
@@ -446,6 +470,25 @@ public class PanelControl extends javax.swing.JPanel {
         
     }//GEN-LAST:event_checkboxShowHazardHitsActionPerformed
 
+    private void buttonPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPrintActionPerformed
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintable(new PrintResults(main));
+        
+//        PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
+//        attr.add(new PrinterResolution(300, 300, PrinterResolution.DPI));
+//        attr.add(new MediaPrintableArea((float) 0.5,(float) 0.5,(float) 7.5,(float) 10.0,MediaPrintableArea.INCH));
+//        attr.add(MediaSizeName.NA_LETTER);
+//        attr.add(new Copies(1));
+//        attr.add(OrientationRequested.PORTRAIT);
+//        attr.add(PrintQuality.HIGH);        
+//        
+        
+        if (job.printDialog()) {
+            try { job.print(); }
+            catch (Exception e) { }
+        }
+    }//GEN-LAST:event_buttonPrintActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCmdLoad;
     private javax.swing.JButton buttonCmdNew;
@@ -454,6 +497,7 @@ public class PanelControl extends javax.swing.JPanel {
     private javax.swing.JButton buttonMapZoomIn;
     private javax.swing.JButton buttonMapZoomOut;
     private javax.swing.JButton buttonMapZoomReset;
+    private javax.swing.JButton buttonPrint;
     private javax.swing.JButton buttonProgExit;
     private javax.swing.JButton buttonRuleLoad;
     private javax.swing.JButton buttonUpdatePath;

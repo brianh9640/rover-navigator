@@ -262,7 +262,7 @@ public class PanelResults extends javax.swing.JPanel {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel7)
                 .addGap(1, 1, 1)
-                .addComponent(labelTestResults, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(labelTestResults, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
