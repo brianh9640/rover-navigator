@@ -41,6 +41,7 @@ public class MotionPath {
     
     public int hazardIntersects;
     public HazardIntersect  hazardIntersect[];
+    public int exitMapArea;
     
     
     protected double travelDistance;
@@ -57,6 +58,7 @@ public class MotionPath {
         clearPath();
         clearExperiments();
         clearHazardIntersects();
+        exitMapArea = 0;
     }
 
     public void setMain(RoverNavigator main) { this.main = main; }
@@ -126,6 +128,7 @@ public class MotionPath {
         clear();
         calcPath();
         
+        mapAreaCheck();
         hazardCheck();
         
         calcPathScore();
@@ -410,23 +413,31 @@ public class MotionPath {
         
         double disc = pBy2 * pBy2 - q;
         if (disc < 0) return;  // no intersect
+        //System.out.println("Circle p=" + p);
+        //System.out.println("...disc = " + disc);
         
         double tmpSqrt = Math.sqrt(disc);
         double abScalingFactor1 = -pBy2 + tmpSqrt;
         double abScalingFactor2 = -pBy2 - tmpSqrt;
+        double segDist;
         
         Point2D.Double pt = new Point2D.Double();
         pt.x = line.x1 - baX * abScalingFactor1;
         pt.y = line.y1 - baY * abScalingFactor1;
-        
-        if (line.ptSegDist(pt) <= 0.0) hazardAddIntersect(p,h,pt);
+        //System.out.println("...pt1  x=" + pt.x + "  y=" + pt.y);
+        segDist = line.ptSegDist(pt);
+        //System.out.println("segDist = " + segDist);
+        if (segDist <= 0.0001) hazardAddIntersect(p,h,pt);
         if (disc == 0) return;
         
         pt = new Point2D.Double();
         pt.x = line.x1 - baX * abScalingFactor2;
         pt.y = line.y1 - baY * abScalingFactor2;
+        //System.out.println("...pt2  x=" + pt.x + "  y=" + pt.y);
         
-        if (line.ptSegDist(pt) <= 0.0) hazardAddIntersect(p,h,pt);
+        segDist = line.ptSegDist(pt);
+        //System.out.println("segDist = " + segDist);
+        if (segDist <= 0.0001) hazardAddIntersect(p,h,pt);
         
      }
 
@@ -453,6 +464,29 @@ public class MotionPath {
         //System.out.println("Hazard Hit : " + h + "  point=" + pt.toString());
     }
     
+    private void mapAreaCheck() {
+        
+        exitMapArea = 0;
+        
+        if (points < 2) return;
+        
+        int p = 1;
+        while (p < points) {
+            if (point[p].point.distance(point[p+1].point) > 0.0) {
+                if (pointOutOfMapArea(p,point[p].point)) exitMapArea++;
+            }
+            
+            p++;
+        }
+    }
+    
+    private boolean pointOutOfMapArea(int p,Point2D.Double pt) {
+        if (pt.x < 0.0) return true;
+        if (pt.y < 0.0) return true;
+        if (pt.x > main.map.width) return true;
+        if (pt.y > main.map.height) return true;
+        return false;
+    }
     private void calcPathScore() {
         pathScore = 0.0;
         
@@ -471,6 +505,6 @@ public class MotionPath {
         
         pathScore = this.travelDistance
                   + this.travelDegrees / 10.0
-                  + this.experimentError * 100.0;
+                  + this.experimentError * 10.0;
     }
 }
