@@ -83,6 +83,7 @@ public class PanelCommands extends javax.swing.JPanel {
         double cmdValue = 0.0;
         String cmdNote;
         boolean validCmd;
+        boolean outputInvalidLine;
         boolean validCmdList = true;
         
         main.commands.clear();
@@ -92,9 +93,11 @@ public class PanelCommands extends javax.swing.JPanel {
         int l = 0;
         while (l < line.length) {
             validCmd = true;
+            outputInvalidLine = true;
             parse = line[l].trim().toUpperCase();
             if (parse.length() >= 4) {
                 if (parse.substring(0,4).equalsIgnoreCase("LEFT")) {
+                    outputInvalidLine = false;
                     cmdType = CommandList.COMMAND_LEFT;
                     if (parse.length() >= 5) {
                         try {
@@ -114,6 +117,7 @@ public class PanelCommands extends javax.swing.JPanel {
             }
             if (parse.length() >= 5) {
                 if (parse.substring(0,5).equalsIgnoreCase("RIGHT")) {
+                    outputInvalidLine = false;
                     cmdType = CommandList.COMMAND_RIGHT;
                     if (parse.length() >= 5) {
                         try {
@@ -133,6 +137,7 @@ public class PanelCommands extends javax.swing.JPanel {
             }
             if (parse.length() >= 7) {
                 if (parse.substring(0,7).equalsIgnoreCase("FORWARD")) {
+                    outputInvalidLine = false;
                     cmdType = CommandList.COMMAND_FORWARD;
                     try {
                         cmdValue = Double.parseDouble(parse.substring(8));
@@ -146,6 +151,7 @@ public class PanelCommands extends javax.swing.JPanel {
             }
             if (parse.length() >= 4) {
                 if (parse.substring(0,4).equalsIgnoreCase("TEST")) {
+                    outputInvalidLine = false;
                     cmdType = CommandList.COMMAND_TEST;
                     cmdNote = "";
                     if (parse.length() >= 5) {
@@ -163,9 +169,18 @@ public class PanelCommands extends javax.swing.JPanel {
                     if (validCmd) main.commands.add(cmdType, cmdNote);
                 }
             }
+            if (outputInvalidLine) {
+                if (parse.length() > 0) {
+                    commandLineError(0,"Unknown Command Line",parse);
+                    validCmdList = false;
+                }
+            }
             l++;
         }
         if (validCmdList) outputCompiledCommands();
+        else {
+            main.commands.clear();
+        }
     }
     
     protected void commandLineError(int cmdType,String errorMsg,String line) {
@@ -204,22 +219,22 @@ public class PanelCommands extends javax.swing.JPanel {
 
             switch (main.commands.type[c]) {
                 case CommandList.COMMAND_LEFT :
-                    textCmds += "Left ";
+                    textCmds += "LEFT ";
                     textCmds += formatAngle.format(main.commands.value[c]);
                     textCmds += "\n";
                     break;
                 case CommandList.COMMAND_RIGHT :
-                    textCmds += "Right ";
+                    textCmds += "RIGHT ";
                     textCmds += formatAngle.format(main.commands.value[c]);
                     textCmds += "\n";
                     break;
                 case CommandList.COMMAND_FORWARD :
-                    textCmds += "Forward ";
+                    textCmds += "FORWARD ";
                     textCmds += formatDistance.format(main.commands.value[c]);
                     textCmds += "\n";
                     break;
                 case CommandList.COMMAND_TEST :
-                    textCmds += "Test ";
+                    textCmds += "TEST ";
                     textCmds += main.commands.note[c];
                     textCmds += "\n";
                     break;

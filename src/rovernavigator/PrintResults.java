@@ -57,7 +57,7 @@ public class PrintResults extends PrintOut implements Printable {
         DecimalFormat formatDegrees = new DecimalFormat("0.0");
         DecimalFormat formatInteger = new DecimalFormat("0");
 
-        _g.setColor(Color.black);
+        g.setColor(Color.black);
         double x = 5.5 * DPI;
         double col2 = 1.85 * DPI;
         double y = 2.0 * DPI;
@@ -77,71 +77,62 @@ public class PrintResults extends PrintOut implements Printable {
         printText(g,"Average Error (m) =",fontSize,x,y);
         printText(g,formatDistance.format(main.motionPath.getExperimentAvgError()),fontSize,x+col2,y);
 
-//        labelPathScore.setText("Path Score = " + formatDistance.format(main.motionPath.getPathScore()));
-//
-//        labelCommandCount.setText(formatInteger.format(main.commands.getCount()));
-//        
-//        if (main.motionPath.hazardIntersects > 0) {
-//            labelHazardCount.setForeground(Color.red);
-//            labelHazardCount.setText(formatInteger.format(main.motionPath.hazardIntersects));
-//        } else {
-//            labelHazardCount.setForeground(new Color(0x00,0xb0,0x00));
-//            labelHazardCount.setText("None");
-//        }
-//            
-//        String msg = "";
-//        msg += "<html>";
-//        msg += "<table>";
-//        
-//        msg += "<tr>";
-//        msg += "<td>";
-//        msg += "ID";
-//        msg += "</td>";
-//        msg += "<td>";
-//        msg += "Completed";
-//        msg += "</td>";
-//        msg += "<td>";
-//        msg += "Error (m)";
-//        msg += "</td>";
-//        msg += "</tr>";
-//        
-//        int e = 0;
-//        while (e < main.motionPath.experiments) {
-//            e++;
-//            msg += "<tr>";
-//            msg += "<td>";
-//            msg += main.motionPath.testResult[e].id;
-//            msg += "</td>";
-//            msg += "<td>";
-//            if (main.motionPath.testResult[e].completed) msg += "Yes";
-//            else msg += "No";
-//            msg += "</td>";
-//            msg += "<td>";
-//            msg += formatDistance.format(main.motionPath.testResult[e].distError);
-//            msg += "</td>";
-//            msg += "</tr>";
-//        }
-//        if (e == 0) {
-//            msg += "<tr>";
-//            msg += "<td>";
-//            msg += "No";
-//            msg += "</td>";
-//            msg += "<td>";
-//            msg += "Experiments";
-//            msg += "</td>";
-//            msg += "<td>";
-//            msg += "Found";
-//            msg += "</td>";
-//            msg += "</tr>";            
-//        }
-//        
-//        msg += "</table>";
-//        msg += "</html>";
-//        labelTestResults.setText(msg);
+        y += linespacing * 1.5;
+        printText(g,"Path Score =",fontSize,x,y);
+        printText(g,formatDistance.format(main.motionPath.getPathScore()),fontSize,x+col2,y);
+
+        y += linespacing * 1.5;
+        printText(g,"# of Commands =",fontSize,x,y);
+        printText(g,formatInteger.format(main.commands.getCount()),fontSize,x+col2,y);
+
+        y += linespacing;
+        printText(g,"# of Hazard Hits =",fontSize,x,y);
+        if (main.motionPath.hazardIntersects > 0) {
+            g.setColor(Color.red);
+            printText(g,formatInteger.format(main.motionPath.hazardIntersects),fontSize,x+col2,y);
+        } else {
+            g.setColor(new Color(0x00,0xb0,0x00));
+            printText(g,"None",fontSize,x+col2,y);
+        }
+        g.setColor(Color.black);
+
+        y += linespacing;
+        printText(g,"Exit Map =",fontSize,x,y);
+        if (main.motionPath.exitMapArea > 0) {
+            g.setColor(Color.red);
+            String exitMap = "YES (" + formatInteger.format(main.motionPath.exitMapArea) + ")";
+            printText(g,exitMap,fontSize,x+col2,y);
+        } else {
+            g.setColor(new Color(0x00,0xb0,0x00));
+            printText(g,"No",fontSize,x+col2,y);
+        } 
         
+        g.setColor(Color.black);
+        double colA = 0.625 * DPI;
+        double colB = 1.6 * DPI;
         
+        y += linespacing * 2;
+        printText(g,"ID",fontSize + 2,x,y);
+        printText(g,"Completed",fontSize + 2,x + colA,y);
+        printText(g,"Error (m)",fontSize + 2,x + colB,y);
+
+        y += linespacing * 1.1;
         
-        
+        int e = 0;
+        while (e < main.motionPath.experiments) {
+            e++;
+            printText(g,main.motionPath.testResult[e].id,fontSize,x,y);
+            String comp = "No";
+            if (main.motionPath.testResult[e].completed) comp = "Yes";
+            printText(g,comp,fontSize,x + colA,y);
+            printText(g,formatDistance.format(main.motionPath.testResult[e].distError),fontSize,x + colB,y);
+            y += linespacing;
+        }
+        if (e == 0) {
+            printText(g,"No",fontSize + 2,x,y);
+            printText(g,"Experiments",fontSize + 2,x + colA,y);
+            printText(g,"Found",fontSize + 2,x + colB,y);
+        }
         
         return Printable.PAGE_EXISTS;    
       }
