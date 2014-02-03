@@ -233,7 +233,8 @@ public class MapDraw {
         mapLine(g2,rp[2],rp[3]);
         mapLine(g2,rp[3],rp[4]);
         mapLine(g2,rp[4],rp[1]);
-        g2.setColor(new Color(0xff,0xff,0xff));
+//        g2.setColor(new Color(0xff,0xff,0xff));
+        g2.setColor(new Color(0x00,0x00,0x00));
         mapLine(g2,rp[5],rp[6]);
         mapLine(g2,rp[7],rp[8]);
         mapLine(g2,rp[5],rp[7]);
