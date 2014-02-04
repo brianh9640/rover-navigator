@@ -88,6 +88,10 @@ public class PanelMap extends JPanel implements MouseWheelListener,MouseMotionLi
         clearPanel(g);
         if (main.map == null) return;
         Dimension size = this.getSize();
+        mapDraw.setShowRover(main.showRover);
+        mapDraw.setShowRoverPath(main.showRoverPath);
+        mapDraw.setShowRoverStart(main.showRoverStart);
+        mapDraw.setShowHazardHits(main.showHazardHits);
         mapDraw.redrawMap(g,size.width,size.height);        
     }
 

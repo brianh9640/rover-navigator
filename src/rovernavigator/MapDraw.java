@@ -69,6 +69,13 @@ public class MapDraw {
     protected int       toolY;
     protected String    toolMsg;
     
+    protected boolean showRoverPath;
+    protected boolean showRover;
+    protected boolean showRoverLocator;
+    protected boolean showRoverStart;
+    protected boolean showHazardHits;
+    protected boolean showGridTicks;
+        
     RoverNavigator main;
     
     public MapDraw() {
@@ -96,9 +103,23 @@ public class MapDraw {
         
         toolShow = false;
         
+        showRoverPath = true;
+        showRover = true;
+        showRoverLocator = false;
+        showRoverStart = true;
+        showHazardHits = true;
+        showGridTicks = false;
     }
     
     public void setMain(RoverNavigator main) { this.main = main; }
+
+    public void setShowRoverPath(boolean value) { showRoverPath = value; }
+    public void setShowRover(boolean value) { showRover = value; }
+    public void setShowRoverLocator(boolean value) { showRoverLocator = value; }
+    public void setShowRoverStart(boolean value) { showRoverStart = value; }
+    public void setShowHazardHits(boolean value) { showHazardHits = value; }
+
+    public void setShowGridTicks(boolean value) { showGridTicks = value; }
     
     public void printable() {
         fontSizeGrid = 24;
@@ -136,11 +157,11 @@ public class MapDraw {
         drawGrid(g);
         
         drawRoverStart(g);
-        if (main.showRover) drawMotionRovers(g);
-        if (main.showRoverPath) drawMotionPath(g);
+        if (showRover) drawMotionRovers(g);
+        if (showRoverPath) drawMotionPath(g);
         drawExperiments(g);
         
-        if (main.showHazardHits) drawHazardIntersects(g);
+        if (showHazardHits) drawHazardIntersects(g);
         
         if (toolShow) drawToolTip(g);
     }    
@@ -173,7 +194,7 @@ public class MapDraw {
     }
     
     public void drawRoverStart(Graphics g) {
-        if (main.showRoverStart) drawRover(g,main.map.roverStart);
+        if (showRoverStart) drawRover(g,main.map.roverStart);
     }
     
     public void drawRover(Graphics g,MapRover rover) {
@@ -197,10 +218,10 @@ public class MapDraw {
         rp[ 2] = new Point2D.Double( 0.75,-1.50);
         rp[ 3] = new Point2D.Double(-0.75,-1.50);
         rp[ 4] = new Point2D.Double(-0.75, 1.50);
-        rp[ 5] = new Point2D.Double( 0.75, 0.00);
-        rp[ 6] = new Point2D.Double(-0.75, 0.00);
-        rp[ 7] = new Point2D.Double( 0.00, 1.50);
-        rp[ 8] = new Point2D.Double( 0.00,-1.50);
+        rp[ 5] = new Point2D.Double( 1.25, 0.00);
+        rp[ 6] = new Point2D.Double(-1.25, 0.00);
+        rp[ 7] = new Point2D.Double( 0.00, 2.0);
+        rp[ 8] = new Point2D.Double( 0.00,-2.0);
 
         int pts = 9;
         Graphics2D g2 = (Graphics2D) g;
@@ -208,13 +229,15 @@ public class MapDraw {
 
 //        g2.setStroke(new BasicStroke(1));
         g2.setColor(new Color(0x00,0x00,0x00));
-        drawRoverTire(g2,0,rover,-0.75,-0.75);
-        drawRoverTire(g2,1,rover, 0.75,-0.75);
-        drawRoverTire(g2,0,rover,-0.75, 0.25);
-        drawRoverTire(g2,1,rover, 0.75, 0.25);
-        drawRoverTire(g2,0,rover,-0.75, 1.50);
-        drawRoverTire(g2,1,rover, 0.75, 1.50);
-
+        if (!showRoverLocator) {
+            drawRoverTire(g2,0,rover,-0.75,-0.75);
+            drawRoverTire(g2,1,rover, 0.75,-0.75);
+            drawRoverTire(g2,0,rover,-0.75, 0.25);
+            drawRoverTire(g2,1,rover, 0.75, 0.25);
+            drawRoverTire(g2,0,rover,-0.75, 1.50);
+            drawRoverTire(g2,1,rover, 0.75, 1.50);
+        }
+        
         int p = 0;
         while (p < pts) {
             rp[p].x += rover.point.x;
@@ -224,7 +247,7 @@ public class MapDraw {
         }
         
         g2.setColor(new Color(0xb0,0xb0,0xb0));
-        drawLine2Fill(g2,rp[1],rp[4],rp[2],rp[3]);
+        if (!showRoverLocator) drawLine2Fill(g2,rp[1],rp[4],rp[2],rp[3]);
         
 //        g2.setStroke(new BasicStroke(2));
         
@@ -466,6 +489,35 @@ public class MapDraw {
             label = new Integer((int) y).toString();
             mapText(g,label,px,py,TEXT_RIGHT,TEXT_MIDDLE);
             y += 10.0;
+        }
+        
+        if (showGridTicks) drawGridTicks(g);
+        
+    }
+    
+    private void drawGridTicks(Graphics g) {
+        double length;
+        
+        double x = 1.0;
+        while (x < main.map.width) {
+            if ((x % 10) > 0) {
+                length = 1.0;
+                if ((x % 5) == 0) length = 1.5; 
+                mapLine(g,x,0,x,length);
+                mapLine(g,x,main.map.height - length,x,main.map.height);
+            }
+            x += 1.0;
+        }
+        
+        double y = 1.0;
+        while (y < main.map.height) {
+            if ((y % 10) > 0) {
+                length = 1.0;
+                if ((y % 5) == 0) length = 1.5; 
+                mapLine(g,0,y,length,y);
+                mapLine(g,main.map.width - length,y,main.map.width,y);
+            }
+            y += 1.0;
         }
         
     }

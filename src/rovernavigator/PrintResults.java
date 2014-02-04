@@ -34,11 +34,14 @@ public class PrintResults extends PrintOut implements Printable {
     public int print(Graphics _g, PageFormat pf, int pageIndex) 
       throws PrinterException  
       {      
-        // pageIndex 0 to 4 corresponds to page numbers 1 to 5. 
         if (pageIndex != 0) return Printable.NO_SUCH_PAGE; 
 
         MapDraw mapDraw = new MapDraw();
         mapDraw.setMain(main);
+        mapDraw.setShowRover(main.showRover);
+        mapDraw.setShowRoverPath(true);
+        mapDraw.setShowRoverStart(main.showRoverStart);
+        mapDraw.setShowHazardHits(true);
 
         _g.setColor(Color.black);
 

@@ -170,6 +170,7 @@ public class PanelControl extends javax.swing.JPanel {
         checkboxRover = new javax.swing.JCheckBox();
         jToolBar1 = new javax.swing.JToolBar();
         buttonMapLoad = new javax.swing.JButton();
+        buttonPrintMap = new javax.swing.JButton();
         buttonRuleLoad = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JToolBar.Separator();
         buttonCmdNew = new javax.swing.JButton();
@@ -220,6 +221,18 @@ public class PanelControl extends javax.swing.JPanel {
             }
         });
         jToolBar1.add(buttonMapLoad);
+
+        buttonPrintMap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/printer.png"))); // NOI18N
+        buttonPrintMap.setToolTipText("Print Blank Map");
+        buttonPrintMap.setFocusable(false);
+        buttonPrintMap.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonPrintMap.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonPrintMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPrintMapActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(buttonPrintMap);
 
         buttonRuleLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/rule_open_hdd.png"))); // NOI18N
         buttonRuleLoad.setToolTipText("Load Rules from Drive");
@@ -277,7 +290,7 @@ public class PanelControl extends javax.swing.JPanel {
         jToolBar1.add(buttonUpdatePath);
 
         buttonPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rovernavigator/images/printer.png"))); // NOI18N
-        buttonPrint.setText("");
+        buttonPrint.setToolTipText("Print Results");
         buttonPrint.setFocusable(false);
         buttonPrint.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonPrint.setMaximumSize(new java.awt.Dimension(39, 39));
@@ -374,7 +387,7 @@ public class PanelControl extends javax.swing.JPanel {
                 .addComponent(checkboxShowResults)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(checkboxShowHazardHits)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -489,6 +502,17 @@ public class PanelControl extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_buttonPrintActionPerformed
 
+    private void buttonPrintMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPrintMapActionPerformed
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintable(new PrintMap(main));
+        
+        if (job.printDialog()) {
+            try { job.print(); }
+            catch (Exception e) { }
+        }
+        
+    }//GEN-LAST:event_buttonPrintMapActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCmdLoad;
     private javax.swing.JButton buttonCmdNew;
@@ -498,6 +522,7 @@ public class PanelControl extends javax.swing.JPanel {
     private javax.swing.JButton buttonMapZoomOut;
     private javax.swing.JButton buttonMapZoomReset;
     private javax.swing.JButton buttonPrint;
+    private javax.swing.JButton buttonPrintMap;
     private javax.swing.JButton buttonProgExit;
     private javax.swing.JButton buttonRuleLoad;
     private javax.swing.JButton buttonUpdatePath;
