@@ -152,6 +152,7 @@ public class PanelControl extends javax.swing.JPanel {
             main.map.readMap(file.getAbsoluteFile().toString());
             main.updateMotionPath();
         }
+        main.setTitle();
         main.panelMap.repaint();
 
     }

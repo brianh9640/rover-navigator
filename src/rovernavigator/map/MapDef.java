@@ -54,7 +54,7 @@ public class MapDef {
     }
     
     public void clear() {
-        name = "";
+        name = "Blank Map";
         units = "meters";
         width = 100.0;
         height = 100.0;
@@ -63,8 +63,8 @@ public class MapDef {
         dpmHeight = 30.0;
         
         roverStart = new MapRover();
-        roverStart.point.x = 10;
-        roverStart.point.y = 10;
+        roverStart.point.x = 11;
+        roverStart.point.y = 11;
         roverStart.heading = 0;
         
         experiments = 0;

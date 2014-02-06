@@ -13,12 +13,10 @@ package rovernavigator;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
@@ -131,6 +129,16 @@ public class MapDraw {
         
     }
     
+    public void printableMap() {
+        fontSizeGrid = 38;
+        fontSizeTool = 72;
+        
+        fontGrid = new Font("Arial",Font.PLAIN, fontSizeGrid);
+        fontTool = new Font("Arial",Font.PLAIN, fontSizeTool);
+        offsetExp = 4;
+        
+    }
+    
     public double zoomScale() { return zoomScale; }
     public void zoomScale(double newScale) { 
         zoomScale = newScale; 
@@ -145,9 +153,11 @@ public class MapDraw {
         mapOffsetY += my;
     }
     
-    public void redrawMap(Graphics g,int iw,int ih) {
+    public void redrawMap(Graphics _g,int iw,int ih) {
         areaWidth = iw;
         areaHeight = ih;
+        
+        Graphics2D g = (Graphics2D) _g.create();
         
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, areaWidth, areaHeight);
@@ -166,7 +176,7 @@ public class MapDraw {
         if (toolShow) drawToolTip(g);
     }    
     
-    private void calcMapScale(Graphics g) {
+    private void calcMapScale(Graphics2D g) {
         int xOffset = 0;
         int yOffset = 0;
         
@@ -193,15 +203,15 @@ public class MapDraw {
         
     }
     
-    public void drawRoverStart(Graphics g) {
+    public void drawRoverStart(Graphics2D g) {
         if (showRoverStart) drawRover(g,main.map.roverStart);
     }
     
-    public void drawRover(Graphics g,MapRover rover) {
+    public void drawRover(Graphics2D g,MapRover rover) {
         /*
          *
          *      4--7--1
-         *      |     |
+         *     9|     |10
          *      |     |
          *     6|  0  |5
          *      |     |
@@ -218,13 +228,15 @@ public class MapDraw {
         rp[ 2] = new Point2D.Double( 0.75,-1.50);
         rp[ 3] = new Point2D.Double(-0.75,-1.50);
         rp[ 4] = new Point2D.Double(-0.75, 1.50);
-        rp[ 5] = new Point2D.Double( 1.25, 0.00);
-        rp[ 6] = new Point2D.Double(-1.25, 0.00);
-        rp[ 7] = new Point2D.Double( 0.00, 2.0);
-        rp[ 8] = new Point2D.Double( 0.00,-2.0);
+        rp[ 5] = new Point2D.Double( 2.00, 0.00);
+        rp[ 6] = new Point2D.Double(-2.00, 0.00);
+        rp[ 7] = new Point2D.Double( 0.00, 3.00);
+        rp[ 8] = new Point2D.Double( 0.00,-3.00);
+        rp[ 9] = new Point2D.Double( 1.75, 0.75);
+        rp[10] = new Point2D.Double(-1.75, 0.75);
 
-        int pts = 9;
-        Graphics2D g2 = (Graphics2D) g;
+        int pts = 11;
+        Graphics2D g2 = (Graphics2D) g.create();
 //        Stroke strokeOrig = g2.getStroke();
 
 //        g2.setStroke(new BasicStroke(1));
@@ -251,19 +263,29 @@ public class MapDraw {
         
 //        g2.setStroke(new BasicStroke(2));
         
-        g2.setColor(new Color(0x30,0x30,0x30));
-        mapLine(g2,rp[1],rp[2]);
-        mapLine(g2,rp[2],rp[3]);
-        mapLine(g2,rp[3],rp[4]);
-        mapLine(g2,rp[4],rp[1]);
-//        g2.setColor(new Color(0xff,0xff,0xff));
-        g2.setColor(new Color(0x00,0x00,0x00));
-        mapLine(g2,rp[5],rp[6]);
-        mapLine(g2,rp[7],rp[8]);
-        mapLine(g2,rp[5],rp[7]);
-        mapLine(g2,rp[6],rp[7]);
-        
-//        g2.setStroke(strokeOrig);
+        if (!showRoverLocator) {
+            g2.setColor(new Color(0x30,0x30,0x30));
+            mapLine(g2,rp[1],rp[2]);
+            mapLine(g2,rp[2],rp[3]);
+            mapLine(g2,rp[3],rp[4]);
+            mapLine(g2,rp[4],rp[1]);
+            g2.setColor(new Color(0x00,0xa0,0x00));
+            mapLine(g2,rp[5],rp[6]);
+            mapLine(g2,rp[7],rp[8]);
+            mapLine(g2,rp[9],rp[7]);
+            mapLine(g2,rp[10],rp[7]);
+            mapCircle(g, rp[0].x, rp[0].y, 0.5);
+        } else {
+            g2.setColor(new Color(0x00,0x00,0x00));
+            mapCircle(g, rp[0].x, rp[0].y, 1.0);
+            mapLine(g2,rp[5],rp[6]);
+            mapLine(g2,rp[7],rp[8]);
+            mapLine(g2,rp[7],rp[9]);
+            mapLine(g2,rp[7],rp[10]);
+            //g2.setColor(Color.gray);
+            //mapText(g2,"Rover",getMapX(rover.point.x),getMapY(rover.point.y - 2.0),TEXT_CENTER,TEXT_TOP);
+
+        }
         
     }
     
@@ -321,7 +343,7 @@ public class MapDraw {
         return newpt;
     }
     
-    public void drawExperiments(Graphics g) {
+    public void drawExperiments(Graphics2D g) {
 
         int e = 0;
         while (e < main.map.experiments) {
@@ -332,7 +354,11 @@ public class MapDraw {
             int rad = scaleMapX(0.5);
             if (rad < 5) rad = 5;
             
-            g.setColor(new Color(0x00,0x90,0x00));
+            if (!showRoverLocator) {            
+                g.setColor(new Color(0x00,0x90,0x00));
+            } else {
+                g.setColor(new Color(0x00,0x00,0x00));
+            }
             g.drawLine(sx-rad*2, sy, sx+rad*2, sy);
             g.drawLine(sx, sy-rad*2, sx, sy+rad*2);
             g.drawArc(sx-rad, sy-rad, rad*2, rad*2, 0, 360);
@@ -342,7 +368,7 @@ public class MapDraw {
         
     }
     
-    public void drawHazards(Graphics g) {
+    public void drawHazards(Graphics2D g) {
         Color colorBorder = Color.BLACK;
         Color colorFill = Color.BLACK;
         
@@ -388,13 +414,13 @@ public class MapDraw {
         }
     }
     
-    public void drawMotionPath(Graphics g) {
+    public void drawMotionPath(Graphics2D g) {
         if (main.motionPath == null) return;
         if (main.motionPath.points < 2) return;
 
         //System.out.println("motion path points = " + motionPath.points);
         
-        Graphics2D g2 = (Graphics2D) g;
+        Graphics2D g2 = (Graphics2D) g.create();
         
         int p = 1;
         while (p < main.motionPath.points) {
@@ -413,13 +439,13 @@ public class MapDraw {
         }
     }
     
-    public void drawMotionRovers(Graphics g) {
+    public void drawMotionRovers(Graphics2D g) {
         if (main.motionPath == null) return;
         if (main.motionPath.points < 2) return;
 
         //System.out.println("motion path points = " + motionPath.points);
         
-        Graphics2D g2 = (Graphics2D) g;
+        Graphics2D g2 = (Graphics2D) g.create();
         
         int p = 1;
         while (p < main.motionPath.points) {
@@ -430,7 +456,7 @@ public class MapDraw {
         drawRover(g2,main.motionPath.point[p]);
     }
     
-    public void drawHazardIntersects(Graphics g) {
+    public void drawHazardIntersects(Graphics2D g) {
         double x1;
         double y1;
         double x2;
@@ -450,7 +476,7 @@ public class MapDraw {
         }
     }
     
-    public void drawGrid(Graphics g) {
+    public void drawGrid(Graphics2D g) {
         g.setColor(Color.blue);
         
         double x = 10.0;
@@ -495,7 +521,7 @@ public class MapDraw {
         
     }
     
-    private void drawGridTicks(Graphics g) {
+    private void drawGridTicks(Graphics2D g) {
         double length;
         
         double x = 1.0;
@@ -522,11 +548,11 @@ public class MapDraw {
         
     }
     
-    public void mapText(Graphics g,String text,int x,int y) {
+    public void mapText(Graphics2D g,String text,int x,int y) {
         mapText(g,text,x,y,TEXT_LEFT,TEXT_TOP);
     }
 
-    public void mapText(Graphics g,String text,int x,int y,int hpos,int vpos) {
+    public void mapText(Graphics2D g,String text,int x,int y,int hpos,int vpos) {
         double fontScale = zoomScale;
         if (fontScale > 1.0) fontScale /= 2.0;
         if (fontScale < 1.0) fontScale = 1.0;
@@ -537,7 +563,7 @@ public class MapDraw {
         AffineTransform affineTransform = new AffineTransform();     
         FontRenderContext frc = new FontRenderContext(affineTransform,true,true);     
         int textWidth = (int)(fontGrid.getStringBounds(text, frc).getWidth());
-        int textHeight = (int)(fontGrid.getStringBounds(text, frc).getHeight());        
+        int textHeight = (int)(fontGrid.getStringBounds(text, frc).getHeight());   
 
         switch (hpos) {
             case TEXT_LEFT :
@@ -556,7 +582,7 @@ public class MapDraw {
                 y = y + textHeight;
                 break;
             case TEXT_MIDDLE :
-                y = y + (textHeight/2);
+                y = y + (int) ((double) textHeight/2.6);
                 break;
             case TEXT_BOTTOM :
                 break;
@@ -566,7 +592,7 @@ public class MapDraw {
         g.drawString(text, x, y);
     }
     
-    public void mapLine(Graphics g,double x1,double y1,double x2,double y2) {
+    public void mapLine(Graphics2D g,double x1,double y1,double x2,double y2) {
         int sx1 = getMapX(x1);
         int sy1 = getMapY(y1);
         int sx2 = getMapX(x2);
@@ -576,17 +602,17 @@ public class MapDraw {
         
     }
     
-    public void mapLine(Graphics g,Point2D.Double p1,Point2D.Double p2) {
+    public void mapLine(Graphics2D g,Point2D.Double p1,Point2D.Double p2) {
         mapLine(g,p1.x,p1.y,p2.x,p2.y);
     }
     
-    public void mapLine(Graphics g,int width,double x1,double y1,double x2,double y2) {
+    public void mapLine(Graphics2D g,int width,double x1,double y1,double x2,double y2) {
         int sx1 = getMapX(x1);
         int sy1 = getMapY(y1);
         int sx2 = getMapX(x2);
         int sy2 = getMapY(y2);
         
-        Graphics2D g2 = (Graphics2D) g;
+        Graphics2D g2 = (Graphics2D) g.create();
         Stroke strokeOrig = g2.getStroke();
         g2.setStroke(new BasicStroke(width));
         g2.drawLine(sx1, sy1, sx2, sy2);
@@ -594,7 +620,7 @@ public class MapDraw {
         
     }
 
-    public void mapRect(Graphics g,double x,double y,double width,double height) {
+    public void mapRect(Graphics2D g,double x,double y,double width,double height) {
         int sx = getMapX(x);
         int sy = getMapY(y);
         int sw = scaleMapX(width);
@@ -604,7 +630,7 @@ public class MapDraw {
         g.drawRect(sx, sy, sw, sh);        
     }
     
-    public void mapRectFill(Graphics g,double x1,double y1,double x2,double y2) {
+    public void mapRectFill(Graphics2D g,double x1,double y1,double x2,double y2) {
         
         if (x1 > x2) {
             double tmp = x1;
@@ -619,8 +645,8 @@ public class MapDraw {
         double width = x2 - x1;
         double height = y2 - y1;
         
-        int sx1 = getMapX(x1);
-        int sy1 = getMapY(y1);
+        int sx1 = (int) getMapX(x1);
+        int sy1 = (int) getMapY(y1);
         int sw = scaleMapX(width);
         int sh = scaleMapY(height);
         sy1 -= sh;
@@ -628,7 +654,7 @@ public class MapDraw {
         g.fillRect(sx1, sy1, sw, sh);
     }
     
-    public void mapRectBox(Graphics g,double x1,double y1,double x2,double y2) {        
+    public void mapRectBox(Graphics2D g,double x1,double y1,double x2,double y2) {        
         if (x1 > x2) {
             double tmp = x1;
             x1 = x2;
@@ -642,8 +668,8 @@ public class MapDraw {
         double width = x2 - x1;
         double height = y2 - y1;
         
-        int sx1 = getMapX(x1);
-        int sy1 = getMapY(y1);
+        int sx1 = (int) getMapX(x1);
+        int sy1 = (int) getMapY(y1);
         int sw = scaleMapX(width);
         int sh = scaleMapY(height);
         sy1 -= sh;
@@ -651,25 +677,25 @@ public class MapDraw {
         g.drawRect(sx1, sy1, sw, sh);
     }
     
-    public void mapCircleFill(Graphics g,double x1,double y1,double radius) {
+    public void mapCircleFill(Graphics2D g,double x1,double y1,double radius) {
         
         double width = radius * 2.0;
         double height = radius * 2.0;
         
-        int sx1 = getMapX(x1);
-        int sy1 = getMapY(y1);
+        int sx1 = (int) getMapX(x1);
+        int sy1 = (int) getMapY(y1);
         int sw = scaleMapX(width);
         int sh = scaleMapY(height);
 
         g.fillOval(sx1-sw/2, sy1-sh/2, sw, sh);
     }
     
-    public void mapCircle(Graphics g,double x1,double y1,double radius) {        
+    public void mapCircle(Graphics2D g,double x1,double y1,double radius) {        
         double width = radius * 2.0;
         double height = radius * 2.0;
         
-        int sx1 = getMapX(x1);
-        int sy1 = getMapY(y1);
+        int sx1 = (int) getMapX(x1);
+        int sy1 = (int) getMapY(y1);
         int sw = scaleMapX(width);
         int sh = scaleMapY(height);
 
@@ -722,7 +748,7 @@ public class MapDraw {
         toolShow = false;
     }
     
-    public void drawToolTip(Graphics g) {
+    public void drawToolTip(Graphics2D g) {
         String line[] = toolMsg.split("\n");
         int width = 0;
         int height = 0;

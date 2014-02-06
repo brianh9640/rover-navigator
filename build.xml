@@ -72,10 +72,11 @@
 
     -->
     <target name="-post-jar">
-        <copy file="maps/map A.xml" flatten="true" todir="${dist.dir}/maps"/>
-        <copy file="maps/map B.xml" flatten="true" todir="${dist.dir}/maps"/>
-        <copy file="maps/map C.xml" flatten="true" todir="${dist.dir}/maps"/>
-        <copy file="maps/map D.xml" flatten="true" todir="${dist.dir}/maps"/>
+        <copy file="maps/map A - Easy.xml" flatten="true" todir="${dist.dir}/maps"/>
+        <copy file="maps/map B - Medium.xml" flatten="true" todir="${dist.dir}/maps"/>
+        <copy file="maps/map C - Medium Hard.xml" flatten="true" todir="${dist.dir}/maps"/>
+        <copy file="maps/map D - Hard.xml" flatten="true" todir="${dist.dir}/maps"/>
+        <copy file="maps/map E - Easy.xml" flatten="true" todir="${dist.dir}/maps"/>
         
         <copy file="programs/Program A.xpg" flatten="true" todir="${dist.dir}/programs"/>
         <copy file="programs/Program B.xpg" flatten="true" todir="${dist.dir}/programs"/>

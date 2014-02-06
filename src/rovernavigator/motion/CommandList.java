@@ -11,6 +11,8 @@
  */
 package rovernavigator.motion;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Brian
@@ -32,8 +34,14 @@ public class CommandList {
     public int type[];
     public double value[];
     public String note[];
+
+    DecimalFormat formatAngle;
+    DecimalFormat formatDistance;
     
     public CommandList() {
+        formatAngle = new DecimalFormat("###");
+        formatDistance = new DecimalFormat("###.0");
+        
         clear();
     }
     
@@ -112,5 +120,32 @@ public class CommandList {
         
         return count;
     }
+    
+    public String outputCommandText(int c) {
+        String textCmd = "";
+        
+        if (c <= 0 || c > count) return textCmd;
+        
+        switch (type[c]) {
+            case CommandList.COMMAND_LEFT :
+                textCmd += "LEFT ";
+                textCmd += formatAngle.format(value[c]);
+                break;
+            case CommandList.COMMAND_RIGHT :
+                textCmd += "RIGHT ";
+                textCmd += formatAngle.format(value[c]);
+                break;
+            case CommandList.COMMAND_FORWARD :
+                textCmd += "FORWARD ";
+                textCmd += formatDistance.format(value[c]);
+                break;
+            case CommandList.COMMAND_TEST :
+                textCmd += "TEST ";
+                textCmd += note[c];
+                break;
+        }
+        return textCmd;
+    }
+    
     
 }

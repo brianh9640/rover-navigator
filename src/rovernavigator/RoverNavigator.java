@@ -104,7 +104,12 @@ public class RoverNavigator extends JPanel implements ActionListener {
         
         //loadFakeCommands();
         updateMotionPath();
+        setTitle();
         
+    }
+    
+    public void setTitle() {
+        frameMain.setTitle("Rover Navigator Scoring Program - " + map.name);
     }
     
     private void loadFakeCommands() {

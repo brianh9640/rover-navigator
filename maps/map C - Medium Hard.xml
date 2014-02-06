@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
     <description>
-        <name>Map B</name>
+        <name>Map C - Medium Hard</name>
         <units>meters</units>
         <width>100.0</width>
         <height>100.0</height>
@@ -15,14 +15,14 @@
             <id>A</id>
             <name>Test A</name>
             <point>
-                <x>44</x><y>75</y>
+                <x>27</x><y>57</y>
             </point>
         </experiment>
         <experiment>
             <id>B</id>
             <name>Test B</name>
             <point>
-                <x>82</x><y>33</y>
+                <x>62</x><y>40</y>
             </point>
         </experiment>
         <experiment>

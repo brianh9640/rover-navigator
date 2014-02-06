@@ -1,42 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
     <description>
-        <name>Map A</name>
+        <name>Map E - Easy</name>
         <units>meters</units>
         <width>100.0</width>
         <height>100.0</height>
     </description>
     <rover>
-        <x>20.0</x><y>5.0</y>
-        <heading>0</heading>
+        <x>23.0</x><y>75.0</y>
+        <heading>90</heading>
     </rover>
     <experiments>
         <experiment>
-            <id>A</id>
-            <name>Test A</name>
+            <id>H</id>
+            <name>Test H</name>
             <point>
-                <x>50.0</x><y>12.5</y>
+                <x>35.0</x><y>55</y>
             </point>            
         </experiment>
         <experiment>
-            <id>B</id>
-            <name>Test B</name>
+            <id>R</id>
+            <name>Test R</name>
             <point>
-                <x>73.0</x><y>82.5</y>
+                <x>68</x><y>32</y>
             </point>            
         </experiment>
         <experiment>
             <id>C</id>
             <name>Test C</name>
             <point>
-                <x>14.3</x><y>91.5</y>
+                <x>14</x><y>91</y>
             </point>            
         </experiment>
         <experiment>
-            <id>D</id>
-            <name>Test D</name>
+            <id>W</id>
+            <name>Test W</name>
             <point>
-                <x>20.5</x><y>33.2</y>
+                <x>28</x><y>13</y>
+            </point>            
+        </experiment>
+        <experiment>
+            <id>F</id>
+            <name>Test F</name>
+            <point>
+                <x>73</x><y>84</y>
             </point>            
         </experiment>
     </experiments>
@@ -46,10 +53,10 @@
             <type>avoid</type>
             <shape>rectangle</shape>
             <point>
-                <x>9.0</x><y>10.0</y>
+                <x>0.0</x><y>5.0</y>
             </point>
             <point>
-                <x>32.0</x><y>24.0</y>
+                <x>15.0</x><y>34.0</y>
             </point>
         </hazard>
         <hazard>
@@ -57,10 +64,10 @@
             <type>avoid</type>
             <shape>rectangle</shape>
             <point>
-                <x>52.0</x><y>37.5</y>
+                <x>72.0</x><y>39.</y>
             </point>
             <point>
-                <x>79.0</x><y>61.0</y>
+                <x>93.0</x><y>55.0</y>
             </point>
         </hazard>
         <hazard>
@@ -68,10 +75,10 @@
             <type>avoid</type>
             <shape>rectangle</shape>
             <point>
-                <x>0</x><y>48.7</y>
+                <x>0</x><y>48.</y>
             </point>
             <point>
-                <x>19.2</x><y>78.7</y>
+                <x>17.</x><y>78.</y>
             </point>
         </hazard>
         <hazard>
@@ -79,9 +86,9 @@
             <type>avoid</type>
             <shape>circle</shape>
             <point>
-                <x>60</x><y>30</y>
+                <x>78</x><y>16</y>
             </point>
-            <radius>12</radius>
+            <radius>10</radius>
         </hazard>
     </hazards>
 </map>

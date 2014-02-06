@@ -48,10 +48,12 @@ public class PrintResults extends PrintOut implements Printable {
         Graphics2D g = (Graphics2D) _g;
         
         double width = pf.getWidth();
-        printText(g,"Rover Navigator Results",32, (int) (width / 2.0),20,TEXT_CENTER,TEXT_TOP);
+        printText(g,"Rover Navigator Results",20, (int) (width / 2.0),20,TEXT_CENTER,TEXT_TOP);
+
+        printText(g,"Team # ______",16, (int) (width - 0.5 * DPI),36,TEXT_RIGHT,TEXT_TOP);
         
         Graphics2D gmap = (Graphics2D) g.create();
-        gmap.translate(0.5 * DPI, 100.0);
+        gmap.translate(0.5 * DPI, 0.9 * DPI);
         gmap.scale(0.4,0.4);
         mapDraw.printable();
         mapDraw.redrawMap(gmap, 800, 800);
@@ -63,11 +65,16 @@ public class PrintResults extends PrintOut implements Printable {
         g.setColor(Color.black);
         double x = 5.5 * DPI;
         double col2 = 1.85 * DPI;
-        double y = 2.0 * DPI;
+        double y = 1.0 * DPI;
         double linespacing = 0.2 * DPI;
         
         int fontSize = 10;
         
+        g.setColor(Color.BLUE);
+        printText(g,"Map: " + main.map.name,fontSize,x,y);
+        y += linespacing * 2;
+        
+        g.setColor(Color.BLACK);
         printText(g,"Total Distance (m) =",fontSize,x,y);
         printText(g,formatDistance.format(main.motionPath.getTravelDistance()),fontSize,x+col2,y);
         y += linespacing;
@@ -137,6 +144,49 @@ public class PrintResults extends PrintOut implements Printable {
             printText(g,"Found",fontSize + 2,x + colB,y);
         }
         
+        
+        printCommandList(g,pf);
+        
+        
         return Printable.PAGE_EXISTS;    
-      }
+    }
+    
+    private void printCommandList(Graphics2D g, PageFormat pf) {
+    
+        String txt;
+        DecimalFormat formatLine = new DecimalFormat("00");
+        
+        double colW = pf.getWidth() / 6.0;
+        double spacing = 11;
+        double startY = 6.25 * DPI;
+        
+        int maxCols = 4;
+        int maxRows = 25;
+        double x = colW / 2;
+        double y = startY;
+        printText(g,"COMMAND LIST",14,x,y,TEXT_LEFT,TEXT_TOP);
+
+        int c = 0;
+        int row;
+        int col;
+        while (c < main.commands.count) {
+            row = c % maxRows;
+            col = c / maxRows;
+            
+            c++;
+            x = col * colW + colW / 2;
+            y = startY + spacing*2 + spacing * row;
+            g.setColor(Color.LIGHT_GRAY);
+            txt = formatLine.format(c);
+            printText(g,txt,8,x,y,TEXT_LEFT,TEXT_TOP);        
+            
+            g.setColor(Color.BLACK);
+            x += 0.20 * DPI;
+            txt = main.commands.outputCommandText(c);
+            printText(g,txt,8,x,y,TEXT_LEFT,TEXT_TOP);        
+            
+        }
+                
+    }
+    
 }

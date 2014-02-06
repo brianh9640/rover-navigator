@@ -210,35 +210,11 @@ public class PanelCommands extends javax.swing.JPanel {
 
     public void outputCompiledCommands() {
         String textCmds = "";
-        DecimalFormat formatAngle = new DecimalFormat("###");
-        DecimalFormat formatDistance = new DecimalFormat("###.0");
         
         int c = 0;
         while (c < main.commands.count) {
             c++;
-
-            switch (main.commands.type[c]) {
-                case CommandList.COMMAND_LEFT :
-                    textCmds += "LEFT ";
-                    textCmds += formatAngle.format(main.commands.value[c]);
-                    textCmds += "\n";
-                    break;
-                case CommandList.COMMAND_RIGHT :
-                    textCmds += "RIGHT ";
-                    textCmds += formatAngle.format(main.commands.value[c]);
-                    textCmds += "\n";
-                    break;
-                case CommandList.COMMAND_FORWARD :
-                    textCmds += "FORWARD ";
-                    textCmds += formatDistance.format(main.commands.value[c]);
-                    textCmds += "\n";
-                    break;
-                case CommandList.COMMAND_TEST :
-                    textCmds += "TEST ";
-                    textCmds += main.commands.note[c];
-                    textCmds += "\n";
-                    break;
-            }
+            textCmds += main.commands.outputCommandText(c) + "\n";
         }
         editorCommands.setText(textCmds);
     }
