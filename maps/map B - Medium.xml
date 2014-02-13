@@ -11,6 +11,7 @@
         <heading>0</heading>
     </rover>
     <experiments>
+        <radius>3.0</radius>
         <experiment>
             <id>A</id>
             <name>Test A</name>

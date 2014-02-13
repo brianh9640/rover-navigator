@@ -30,6 +30,9 @@ public class CommandList {
     
     public static final String PROGRAM_EXTENSION    = "xpg";
     
+    public String teamNo;
+    public String school;
+    
     public int count;
     public int type[];
     public double value[];
@@ -41,6 +44,9 @@ public class CommandList {
     public CommandList() {
         formatAngle = new DecimalFormat("###");
         formatDistance = new DecimalFormat("###.0");
+        
+        teamNo = "";
+        school = "";
         
         clear();
     }

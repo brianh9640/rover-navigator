@@ -43,6 +43,8 @@ public class MapDef {
     
     public MapRover roverStart;
     
+    public double radius;           // experiment radius for experiment score
+    
     public int experiments;
     public MapExperiment experiment[];
     
@@ -69,6 +71,8 @@ public class MapDef {
         
         experiments = 0;
         experiment = new MapExperiment[MAX_EXPERIMENTS + 1];
+        
+        radius = 3.0;
         
         hazards = 0;
         hazard = new MapHazard[MAX_HAZARDS + 1];
@@ -175,6 +179,8 @@ public class MapDef {
                                     if (name.equalsIgnoreCase("x")) experiment[experiments].point.x = Double.parseDouble(reader.getText());
                                     if (name.equalsIgnoreCase("y")) experiment[experiments].point.y = Double.parseDouble(reader.getText());
                                 }                                
+                            } else {
+                                if (name.equalsIgnoreCase("radius")) radius = Double.parseDouble(reader.getText());                                
                             }
                         }
                         if (sectionHazards) {

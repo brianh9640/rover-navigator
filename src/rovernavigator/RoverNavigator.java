@@ -17,17 +17,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import rovernavigator.motion.CommandList;
 import rovernavigator.motion.MotionPath;
 import rovernavigator.map.MapDef;
 
-/**
- *
- * @author Brian
- */
 public class RoverNavigator extends JPanel implements ActionListener {
 
     public static final int BORDER_PANEL                = 2;
@@ -36,7 +31,7 @@ public class RoverNavigator extends JPanel implements ActionListener {
     public static final int PANEL_CONTROL_HEIGHT        = 80;
     public static final int PANEL_RESULTS_WIDTH         = 180;
     
-    public String version = "0.04.00";
+    public String version = "0.04.02";
     
     JFrame              frameMain;
     PanelLogo           panelLogo;

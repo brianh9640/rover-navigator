@@ -73,6 +73,8 @@ public class MapDraw {
     protected boolean showRoverStart;
     protected boolean showHazardHits;
     protected boolean showGridTicks;
+    
+    protected boolean printing;
         
     RoverNavigator main;
     
@@ -107,6 +109,8 @@ public class MapDraw {
         showRoverStart = true;
         showHazardHits = true;
         showGridTicks = false;
+        
+        printing = false;
     }
     
     public void setMain(RoverNavigator main) { this.main = main; }
@@ -127,6 +131,7 @@ public class MapDraw {
         fontTool = new Font("Arial",Font.PLAIN, fontSizeTool);
         offsetExp = 4;
         
+        printing = true;
     }
     
     public void printableMap() {
@@ -137,6 +142,7 @@ public class MapDraw {
         fontTool = new Font("Arial",Font.PLAIN, fontSizeTool);
         offsetExp = 4;
         
+        printing = true;
     }
     
     public double zoomScale() { return zoomScale; }
@@ -379,7 +385,8 @@ public class MapDraw {
             switch (main.map.hazard[h].type) {
                 case MapHazard.TYPE_AVOID :
                     colorBorder = Color.RED;
-                    colorFill = new Color(255,225,225);
+                    if (!printing) colorFill = new Color(255,225,225);
+                    else colorFill = new Color(230,180,180);
                     break;
             }
             switch (main.map.hazard[h].shape) {

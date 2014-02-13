@@ -99,6 +99,24 @@ public class MotionPath {
         experimentError = 0.0;
     }
 
+    public int getTier() {
+        int tier = 1;
+
+        if (hazardIntersects > 0) tier = 2;
+        
+        
+        if (exitMapArea > 0) tier = 3;
+        
+        int e = 0;
+        while (e < experiments) {
+            e++;
+            if (!testResult[e].completed) tier = 3;
+        }
+            
+        return tier;
+    }
+    
+    
     public TestResult getTestResult(String id) {
         int e = 0;
         while (e < experiments) {
@@ -306,7 +324,7 @@ public class MotionPath {
 
     private void hazardCheckLine(int p,Point2D.Double p1,Point2D.Double p2) {   
         int h = 0;
-        Point2D.Double pointIntersect = null;
+        Point2D.Double pointIntersect;
         
         Line2D.Double lineR = new Line2D.Double();
         lineR.setLine(p1, p2);

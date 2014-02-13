@@ -20,14 +20,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.Copies;
-import javax.print.attribute.standard.MediaPrintableArea;
-import javax.print.attribute.standard.MediaSizeName;
-import javax.print.attribute.standard.OrientationRequested;
-import javax.print.attribute.standard.PrintQuality;
-import javax.print.attribute.standard.PrinterResolution;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import rovernavigator.map.MapDef;
@@ -412,7 +404,11 @@ public class PanelControl extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonUpdatePathMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonUpdatePathMouseClicked
-        main.updateMotionPath();
+        DialogRunPath dialogRunPath = new DialogRunPath(main.frameMain,true);
+        dialogRunPath.setMain(main);
+        dialogRunPath.setLocation(main.frameMain.getX()+100, main.frameMain.getY()+75);
+        dialogRunPath.setVisible(true);
+        //main.updateMotionPath();
 
     }//GEN-LAST:event_buttonUpdatePathMouseClicked
 
@@ -425,6 +421,8 @@ public class PanelControl extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonProgExitMouseClicked
 
     private void buttonCmdLoadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonCmdLoadMouseClicked
+        main.commands.teamNo = "";
+        main.commands.school = "";
         commandListLoad();
 
     }//GEN-LAST:event_buttonCmdLoadMouseClicked
@@ -469,6 +467,8 @@ public class PanelControl extends javax.swing.JPanel {
 
     private void buttonCmdNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCmdNewActionPerformed
         main.panelCommands.setCommandText("");
+        main.commands.teamNo = "";
+        main.commands.school = "";
         main.updateMotionPath();
         
     }//GEN-LAST:event_buttonCmdNewActionPerformed
