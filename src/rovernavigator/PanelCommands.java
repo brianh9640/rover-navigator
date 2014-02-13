@@ -85,6 +85,7 @@ public class PanelCommands extends javax.swing.JPanel {
         boolean validCmd;
         boolean outputInvalidLine;
         boolean validCmdList = true;
+        int index;
         
         main.commands.clear();
 
@@ -95,13 +96,15 @@ public class PanelCommands extends javax.swing.JPanel {
             validCmd = true;
             outputInvalidLine = true;
             parse = line[l].trim().toUpperCase();
-            if (parse.length() >= 4) {
-                if (parse.substring(0,4).equalsIgnoreCase("LEFT")) {
+            
+            if (parse.length() > 2) {
+                if (parse.substring(0,1).equalsIgnoreCase("L")) {
                     outputInvalidLine = false;
                     cmdType = CommandList.COMMAND_LEFT;
-                    if (parse.length() >= 5) {
+                    index = parse.indexOf(" ");
+                    if (index >= 0) {
                         try {
-                            cmdValue = Double.parseDouble(parse.substring(5));
+                            cmdValue = Double.parseDouble(parse.substring(index));
                         } catch (NumberFormatException e) {
                             commandLineError(cmdType,"Invalid Left Angle",parse);
                             validCmd = false;
@@ -114,14 +117,14 @@ public class PanelCommands extends javax.swing.JPanel {
                     }
                     if (validCmd) main.commands.add(cmdType, cmdValue);
                 }
-            }
-            if (parse.length() >= 5) {
-                if (parse.substring(0,5).equalsIgnoreCase("RIGHT")) {
+ 
+                if (parse.substring(0,1).equalsIgnoreCase("R")) {
                     outputInvalidLine = false;
                     cmdType = CommandList.COMMAND_RIGHT;
-                    if (parse.length() >= 5) {
+                    index = parse.indexOf(" ");
+                    if (index >= 0) {
                         try {
-                            cmdValue = Double.parseDouble(parse.substring(5));
+                            cmdValue = Double.parseDouble(parse.substring(index));
                         } catch (NumberFormatException e) {
                             commandLineError(cmdType,"Invalid Right Angle",parse);
                             validCmd = false;
@@ -134,28 +137,34 @@ public class PanelCommands extends javax.swing.JPanel {
                     }
                     if (validCmd) main.commands.add(cmdType, cmdValue);
                 }
-            }
-            if (parse.length() >= 7) {
-                if (parse.substring(0,7).equalsIgnoreCase("FORWARD")) {
+                
+                if (parse.substring(0,1).equalsIgnoreCase("F")) {
                     outputInvalidLine = false;
                     cmdType = CommandList.COMMAND_FORWARD;
-                    try {
-                        cmdValue = Double.parseDouble(parse.substring(8));
-                    } catch (NumberFormatException e) {
-                        commandLineError(cmdType,"Invalid Forward Distance",parse);
+                    index = parse.indexOf(" ");
+                    if (index >= 0) {
+                        try {
+                            cmdValue = Double.parseDouble(parse.substring(index));
+                        } catch (NumberFormatException e) {
+                            commandLineError(cmdType,"Invalid Forward Distance",parse);
+                            validCmd = false;
+                            validCmdList = false;
+                        }
+                    } else {
+                        commandLineError(cmdType,"Forward Distance Missing",parse);
                         validCmd = false;
                         validCmdList = false;
                     }
                     if (validCmd) main.commands.add(cmdType, cmdValue);
                 }
-            }
-            if (parse.length() >= 4) {
-                if (parse.substring(0,4).equalsIgnoreCase("TEST")) {
+
+                if (parse.substring(0,1).equalsIgnoreCase("T")) {
                     outputInvalidLine = false;
                     cmdType = CommandList.COMMAND_TEST;
                     cmdNote = "";
-                    if (parse.length() >= 5) {
-                        cmdNote = parse.substring(5).trim();
+                    index = parse.indexOf(" ");
+                    if (index >= 0) {
+                        cmdNote = parse.substring(index).trim();
                         if (main.map.getExperiment(cmdNote) == null) {
                             commandLineError(cmdType,"Invalid Experiment ID",parse);
                             validCmd = false;
