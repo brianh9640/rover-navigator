@@ -24,6 +24,7 @@ import java.awt.geom.Point2D;
 import java.text.DecimalFormat;
 import javax.swing.JPanel;
 import rovernavigator.map.MapExperiment;
+import rovernavigator.map.MapRover;
 import rovernavigator.motion.TestResult;
 
 /**
@@ -159,6 +160,23 @@ public class PanelMap extends JPanel implements MouseWheelListener,MouseMotionLi
             }
             
         }
+
+        int p = 0;
+        while (p < main.motionPath.points) {
+            p++;
+        
+            MapRover rover = main.motionPath.point[p];
+            if (rover.point.distance(pointCursor) < 2.0) {
+                String msg;
+                msg = "Rover Point " + p + "\nX:" + formatError.format(rover.point.x) + " Y:" + formatError.format(rover.point.y);
+                msg += "\nHeading: " + formatDistance.format(rover.heading);
+                mapDraw.defineToolTip(e.getX(),e.getY(),msg);
+                repaint();
+                return;
+            }
+            
+        }
+        
         clearToolTip();
     }
     

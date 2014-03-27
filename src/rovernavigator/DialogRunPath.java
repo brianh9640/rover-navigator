@@ -150,26 +150,23 @@ public class DialogRunPath extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonRun = new javax.swing.JButton();
-        buttonCancel = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        textTeamNo = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        textSchoolName = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        labelEx1 = new javax.swing.JLabel();
-        textEx1 = new javax.swing.JTextField();
-        textEx2 = new javax.swing.JTextField();
-        labelEx2 = new javax.swing.JLabel();
+        textEx6 = new javax.swing.JTextField();
+        textEx14 = new javax.swing.JTextField();
+        textEx5 = new javax.swing.JTextField();
+        labelEx14 = new javax.swing.JLabel();
+        labelEx5 = new javax.swing.JLabel();
+        labelEx13 = new javax.swing.JLabel();
+        textEx4 = new javax.swing.JTextField();
+        textEx13 = new javax.swing.JTextField();
+        labelEx4 = new javax.swing.JLabel();
         textEx3 = new javax.swing.JTextField();
         labelEx3 = new javax.swing.JLabel();
-        textEx4 = new javax.swing.JTextField();
-        labelEx4 = new javax.swing.JLabel();
-        textEx5 = new javax.swing.JTextField();
-        labelEx5 = new javax.swing.JLabel();
-        textEx6 = new javax.swing.JTextField();
-        labelEx6 = new javax.swing.JLabel();
+        textEx15 = new javax.swing.JTextField();
+        textEx2 = new javax.swing.JTextField();
+        labelEx15 = new javax.swing.JLabel();
+        labelEx2 = new javax.swing.JLabel();
         textEx7 = new javax.swing.JTextField();
+        labelEx6 = new javax.swing.JLabel();
         labelEx7 = new javax.swing.JLabel();
         textEx8 = new javax.swing.JTextField();
         labelEx8 = new javax.swing.JLabel();
@@ -178,15 +175,67 @@ public class DialogRunPath extends javax.swing.JDialog {
         textEx10 = new javax.swing.JTextField();
         labelEx10 = new javax.swing.JLabel();
         labelEx11 = new javax.swing.JLabel();
+        textEx1 = new javax.swing.JTextField();
         textEx11 = new javax.swing.JTextField();
-        labelEx12 = new javax.swing.JLabel();
         textEx12 = new javax.swing.JTextField();
-        labelEx13 = new javax.swing.JLabel();
-        textEx13 = new javax.swing.JTextField();
-        textEx14 = new javax.swing.JTextField();
-        labelEx14 = new javax.swing.JLabel();
-        textEx15 = new javax.swing.JTextField();
-        labelEx15 = new javax.swing.JLabel();
+        labelEx12 = new javax.swing.JLabel();
+        labelEx1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        buttonRun = new javax.swing.JButton();
+        buttonCancel = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        textTeamNo = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        textSchoolName = new javax.swing.JTextField();
+
+        labelEx14.setText("\"A\"");
+        labelEx14.setToolTipText("");
+
+        labelEx5.setText("\"A\"");
+        labelEx5.setToolTipText("");
+
+        labelEx13.setText("\"A\"");
+        labelEx13.setToolTipText("");
+
+        labelEx4.setText("\"A\"");
+        labelEx4.setToolTipText("");
+
+        labelEx3.setText("\"A\"");
+        labelEx3.setToolTipText("");
+
+        labelEx15.setText("\"A\"");
+        labelEx15.setToolTipText("");
+
+        labelEx2.setText("\"A\"");
+        labelEx2.setToolTipText("");
+
+        labelEx6.setText("\"A\"");
+        labelEx6.setToolTipText("");
+
+        labelEx7.setText("\"A\"");
+        labelEx7.setToolTipText("");
+
+        labelEx8.setText("\"A\"");
+        labelEx8.setToolTipText("");
+
+        labelEx9.setText("\"A\"");
+        labelEx9.setToolTipText("");
+
+        labelEx10.setText("\"A\"");
+        labelEx10.setToolTipText("");
+
+        labelEx11.setText("\"A\"");
+        labelEx11.setToolTipText("");
+
+        labelEx12.setText("\"A\"");
+        labelEx12.setToolTipText("");
+
+        labelEx1.setText("\"A\"");
+        labelEx1.setToolTipText("");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel3.setText("EXPERIMENT SCORES");
+        jLabel3.setToolTipText("");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -213,55 +262,6 @@ public class DialogRunPath extends javax.swing.JDialog {
         textSchoolName.setToolTipText("");
         textSchoolName.setName(""); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel3.setText("EXPERIMENT SCORES");
-        jLabel3.setToolTipText("");
-
-        labelEx1.setText("\"A\"");
-        labelEx1.setToolTipText("");
-
-        labelEx2.setText("\"A\"");
-        labelEx2.setToolTipText("");
-
-        labelEx3.setText("\"A\"");
-        labelEx3.setToolTipText("");
-
-        labelEx4.setText("\"A\"");
-        labelEx4.setToolTipText("");
-
-        labelEx5.setText("\"A\"");
-        labelEx5.setToolTipText("");
-
-        labelEx6.setText("\"A\"");
-        labelEx6.setToolTipText("");
-
-        labelEx7.setText("\"A\"");
-        labelEx7.setToolTipText("");
-
-        labelEx8.setText("\"A\"");
-        labelEx8.setToolTipText("");
-
-        labelEx9.setText("\"A\"");
-        labelEx9.setToolTipText("");
-
-        labelEx10.setText("\"A\"");
-        labelEx10.setToolTipText("");
-
-        labelEx11.setText("\"A\"");
-        labelEx11.setToolTipText("");
-
-        labelEx12.setText("\"A\"");
-        labelEx12.setToolTipText("");
-
-        labelEx13.setText("\"A\"");
-        labelEx13.setToolTipText("");
-
-        labelEx14.setText("\"A\"");
-        labelEx14.setToolTipText("");
-
-        labelEx15.setText("\"A\"");
-        labelEx15.setToolTipText("");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -275,81 +275,13 @@ public class DialogRunPath extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonRun))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textTeamNo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textSchoolName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelEx5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(labelEx10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(7, 7, 7))
-                                    .addComponent(jLabel3)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(labelEx1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(labelEx6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(labelEx2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(labelEx7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(labelEx3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(labelEx8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(labelEx4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(labelEx9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelEx11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelEx12)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelEx13)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelEx14)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelEx15)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textEx15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textTeamNo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textSchoolName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -362,64 +294,7 @@ public class DialogRunPath extends javax.swing.JDialog {
                     .addComponent(textTeamNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(textSchoolName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx11)
-                        .addComponent(textEx11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx6)
-                        .addComponent(textEx6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx1)
-                        .addComponent(textEx1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx12)
-                        .addComponent(textEx12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx7)
-                        .addComponent(textEx7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx2)
-                        .addComponent(textEx2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx13)
-                        .addComponent(textEx13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx8)
-                        .addComponent(textEx8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx3)
-                        .addComponent(textEx3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx14)
-                        .addComponent(textEx14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx9)
-                        .addComponent(textEx9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx4)
-                        .addComponent(textEx4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx15)
-                        .addComponent(textEx15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx10)
-                        .addComponent(textEx10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelEx5)
-                        .addComponent(textEx5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonRun)
                     .addComponent(buttonCancel))

@@ -104,8 +104,7 @@ public class MotionPath {
 
         if (hazardIntersects > 0) tier = 2;
         
-        
-        if (exitMapArea > 0) tier = 3;
+        if (exitMapArea > 0) tier = 2;
         
         int e = 0;
         while (e < experiments) {
