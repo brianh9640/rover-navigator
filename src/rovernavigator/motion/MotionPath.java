@@ -495,6 +495,7 @@ public class MotionPath {
             
             p++;
         }
+        if (pointOutOfMapArea(p,point[p].point)) exitMapArea++;
     }
     
     private boolean pointOutOfMapArea(int p,Point2D.Double pt) {

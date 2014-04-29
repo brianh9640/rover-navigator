@@ -78,6 +78,8 @@
         <copy file="maps/map D - Hard.xml" flatten="true" todir="${dist.dir}/maps"/>
         <copy file="maps/map E - Easy.xml" flatten="true" todir="${dist.dir}/maps"/>
         <copy file="maps/map Mentor 2014 - Easy Medium.xml" flatten="true" todir="${dist.dir}/maps"/>
+        <copy file="maps/map OSU 2014 - Div B - Medium.xml" flatten="true" todir="${dist.dir}/maps"/>
+        <copy file="maps/map OSU 2014 - Div C - Medium Hard.xml" flatten="true" todir="${dist.dir}/maps"/>
         
         <copy file="programs/Program A.xpg" flatten="true" todir="${dist.dir}/programs"/>
         <copy file="programs/Program B.xpg" flatten="true" todir="${dist.dir}/programs"/>

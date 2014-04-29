@@ -53,7 +53,7 @@ public class PrintMap extends PrintOut implements Printable {
         Graphics2D g = (Graphics2D) _g;
         
         double width = pf.getWidth();
-        printText(g,"Rover Navigator - " + main.map.name,20, (int) (width / 2.0),20,TEXT_CENTER,TEXT_TOP);
+        printText(g,"Mars Rover - " + main.map.name,20, (int) (width / 2.0),20,TEXT_CENTER,TEXT_TOP);
         
         int mapWidth = 1800;
         double marginLeft = 0.25 * DPI;
@@ -113,6 +113,11 @@ public class PrintMap extends PrintOut implements Printable {
         txt = "Heading: " 
                 + formatPoint.format(main.map.roverStart.heading);
         printText(g,txt,12,x,y,TEXT_CENTER,TEXT_TOP);
+        
+        x = 1.0 * DPI;
+        y = 10.6 * DPI;
+        txt = "Experiment Radius = " + formatPoint.format(main.map.radius) + "m";
+        printText(g,txt,12,x,y,TEXT_LEFT,TEXT_TOP);
         
         x = 8.0 * DPI;
         y = 10.5 * DPI;
